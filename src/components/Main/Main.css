@@ -1,0 +1,14 @@
+.main__subtitle {
+  margin: 0;
+  max-width: 600px;
+  font-size: 22px;
+  line-height: 26.63px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+.main__subtitle-line {
+  margin: 23px 0 0 0;
+  height: 1px;
+  background-color: black;
+}
