@@ -1,3 +1,7 @@
+.main {
+  flex: 1 1 auto;
+}
+
 .main__subtitle {
   margin: 0;
   max-width: 600px;
