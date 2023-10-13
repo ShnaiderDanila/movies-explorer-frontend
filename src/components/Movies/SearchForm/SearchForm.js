@@ -15,6 +15,7 @@ function SearchForm() {
           <label className='search-form__text' for='switch'>Короткометражки</label>
         </div>
       </form>
+      <hr className='search-form__underline'></hr>
     </section>
   )
 }

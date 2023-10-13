@@ -77,3 +77,11 @@
   font-size: 13px;
   line-height: 18px;
 }
+
+.search-form__underline {
+  margin: 69px 0 0 0;
+  padding: 0;
+  border: 0;
+  height: 1px;
+  background-color: #e8e8e8;
+}
