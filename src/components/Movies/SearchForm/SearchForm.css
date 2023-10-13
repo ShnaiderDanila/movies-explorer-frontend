@@ -56,6 +56,11 @@
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.search-form__button:hover {
+  opacity: 0.8;
 }
 
 .search-form__line {
