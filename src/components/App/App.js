@@ -4,7 +4,9 @@ import './App.css';
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
 import Footer from '../Footer/Footer';
+
 
 function App() {
 
@@ -16,6 +18,7 @@ function App() {
       <Header isLoggedIn={isLoggedIn} />
       <Routes>
         <Route path='/' element={<Main/>} />
+        <Route path='/movies' element={<Movies/>} />
       </Routes>
       <Footer />
     </div>
