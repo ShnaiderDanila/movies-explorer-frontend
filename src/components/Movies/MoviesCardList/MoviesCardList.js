@@ -41,13 +41,65 @@ const cards = [
     image: movieImage,
     name: '33 слова о дизайне',
     duration: '1ч42м',
-  }
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
+  {
+    image: movieImage,
+    name: '33 слова о дизайне',
+    duration: '1ч42м',
+  },
 ]
 
 function MoviesCardList() {
   return (
     <section className='movies-card-list'>
-
+       <ul className='movies-card-list__list'>
+        {
+          cards.map((card, i) => {
+            return <MoviesCard key={i} card={card} />
+          })
+        }
+      </ul>
+      <button className='movies-card-list__button-more'>Ещё</button>
     </section>
   )
 }
