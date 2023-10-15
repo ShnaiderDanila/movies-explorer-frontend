@@ -12,7 +12,7 @@ function SearchForm() {
           <button className='search-form__button' type='submit' />
           <hr className='search-form__line' />
           <FilterCheckbox />
-          <label className='search-form__text' for='switch'>Короткометражки</label>
+          <label className='search-form__text' htmlFor='switch'>Короткометражки</label>
         </div>
       </form>
       <hr className='search-form__underline'></hr>
