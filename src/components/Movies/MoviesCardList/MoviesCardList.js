@@ -3,6 +3,8 @@ import './MoviesCardList.css';
 
 import movieImage from '../../../images/movie-image.jpg';
 
+import MoviesCard from '../MoviesCard/MoviesCard';
+
 // Временный массив карточек, без использования API
 const cards = [
   {
