@@ -11,7 +11,8 @@ import Footer from '../Footer/Footer';
 
 function App() {
 
-  // Временая стейт переменная авторизованного пользователя для верстки JSX
+  // Временая стейт переменная авторизованного пользователя, 
+  // для изменения отображения jsx верстки компонента Header
   const [isLoggedIn] = useState(false);
 
   return (
