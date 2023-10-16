@@ -26,6 +26,14 @@
   opacity: 0.7;
 }
 
+.navigation__link_active {
+  text-decoration: none;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
 .navigation__profile-button {
   min-width: 100px;
   min-height: 32px;
