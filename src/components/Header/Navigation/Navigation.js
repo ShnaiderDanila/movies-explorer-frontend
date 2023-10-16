@@ -9,14 +9,22 @@ function Navigation({ isLoggedIn }) {
       <nav className="navigation">
         <ul className="navigation__menu">
           <li className="navigation__menu-item">
-            <NavLink to='/movies' className='navigation__link'>Фильмы</NavLink>
+            <NavLink
+              to='/movies'
+              className={({ isActive }) => `${isActive ? 'navigation__link_active' : 'navigation__link'}`}>
+              Фильмы
+            </NavLink>
           </li>
           <li className="navigation__menu-item">
-            <NavLink to='/saved-movies' className='navigation__link'>Сохранённые фильмы</NavLink>
+            <NavLink
+              to='/saved-movies'
+              className={({ isActive }) => ` ${isActive ? 'navigation__link_active' : 'navigation__link'}`}>
+              Сохранённые фильмы
+            </NavLink>
           </li>
         </ul>
         <Link to='/profile' className="navigation__profile-button"></Link>
-      </nav>
+      </nav >
     )
   } else {
     return (
