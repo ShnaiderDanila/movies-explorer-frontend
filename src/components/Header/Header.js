@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link , useLocation} from "react-router-dom";
 import './Header.css';
 
 import logo from '../../images/logo.svg';
@@ -7,8 +7,11 @@ import logo from '../../images/logo.svg';
 import Navigation from './Navigation/Navigation';
 
 function Header({isLoggedIn}) {
+
+  const { pathname } = useLocation();
+
   return (
-    <header className="header">
+    <header className={`header ${pathname !== '/' && 'header_white'}`}>
       <Link to='/' className='header__logo-link'><img src={logo} className="header__logo" alt="Логотип" /></Link>
       <Navigation isLoggedIn={isLoggedIn}/>
     </header>
