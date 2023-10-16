@@ -47,6 +47,21 @@
   background-color: #2be080;
 }
 
+.movies-card__delete-button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  background-image: url('../../../images/cross.svg');
+  min-width: 16px;
+  min-height: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.movies-card__delete-button:hover {
+  opacity: 0.8;
+}
+
 .movies-card__duration {
   margin: 10px 0 0 0;
   color: #a0a0a0;
