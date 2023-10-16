@@ -7,9 +7,8 @@
   padding: 0;
   list-style-type: none;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fit, 270px);
   gap: 32px 20px;
-  justify-items: center;
 }
 
 .movies-card-list__button-more {
