@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.header_white {
+  background-color: transparent;
+}
+
 .header__logo {
   min-width: 38px;
   min-height: 38px;
