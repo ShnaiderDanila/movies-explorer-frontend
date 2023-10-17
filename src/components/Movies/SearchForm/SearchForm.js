@@ -1,13 +1,27 @@
-import React from 'react';
+import { useState } from 'react';
 import './SearchForm.css';
 
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
 function SearchForm() {
+
+  const [film, setFilm] = useState();
+
+  function handleChangeFilm(evt) {
+    setFilm(evt.target.value)
+  }
+
   return (
     <section className='search-form'>
       <form className='search-form__form'>
-        <input className='search-form__input' id='film' name='film' type='text' placeholder='Фильм' />
+        <input className='search-form__input'
+          id='film'
+          name='film'
+          type='text'
+          placeholder='Фильм'
+          value={film || ''}
+          onChange={handleChangeFilm}
+        />
         <div className='search-form__container'>
           <button className='search-form__button' type='submit' />
           <hr className='search-form__line' />
