@@ -10,6 +10,7 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
+import NotFound from '../NotFound/NotFound';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
     <div className="wrapper">
       <Header isLoggedIn={isLoggedIn} />
       <Routes>
+        <Route path='*' element={<NotFound />} />
         <Route path='/' element={<Main />} />
         <Route path='/movies' element={<Movies />} />
         <Route path='/saved-movies' element={<SavedMovies />} />
