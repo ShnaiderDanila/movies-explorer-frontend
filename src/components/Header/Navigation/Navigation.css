@@ -6,7 +6,7 @@
 }
 
 .navigation__menu {
-  margin: 0;
+  margin: 0 0 0 45px;
   padding: 0;
   list-style-type: none;
   display: flex;
