@@ -38,10 +38,6 @@
     justify-content: space-between;
   }
 
-  .header-black-overlay {
-    padding-right: 16px;
-  }
-
   .header-black-overlay::before {
     content: '';
     position: absolute;
@@ -58,6 +54,12 @@
     z-index: 4;
   }
 
+  .header__burger-menu-button_close {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+  }
+
   /* Класс для body. Запрет скролла страницы при открытом бургер-меню */
   .no-scroll {
     overflow: hidden;
@@ -67,5 +69,20 @@
 @media screen and (max-width: 425px) {
   .header {
     padding: 15px 14px;
+  }
+
+  .header__burger-menu-button {
+    min-width: 40px;
+    min-height: 43px;
+  }
+
+  .header__burger-menu-button_open {
+    background-image: url(../../images/burger-menu-icon-phone.svg);
+  }
+
+  .header__burger-menu-button_close {
+    position: absolute;
+    top: 6px;
+    right: 7px;
   }
 }
