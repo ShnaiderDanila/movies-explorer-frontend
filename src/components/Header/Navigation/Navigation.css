@@ -107,7 +107,7 @@
     right: 0;
     z-index: 3;
     background-color: #fafafa;
-    padding: 159px 0 90px 0;
+    padding: 157px 0 93px 0;
     max-width: 520px;
     height: 100%;
     box-sizing: border-box;
@@ -136,10 +136,14 @@
 }
 
 @media screen and (max-width: 425px) {
+  .navigation-white-overlay {
+    padding: 144px 10px 47px 10px;
+  }
+
   .navigation__menu {
     gap: 24px
   }
-
+  
   .navigation__link_active {
     padding: 0 0 7px 0;
   }
