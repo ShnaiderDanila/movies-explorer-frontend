@@ -3,6 +3,17 @@
   background-color: #dddee3;
 }
 
+.promo__container {
+  min-height: 320px;
+  background-image: url(../../../images/promo-logo.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .promo__title {
   margin: 0;
   max-width: 730px;
@@ -13,15 +24,28 @@
   text-align: center;
 }
 
-.promo__container {
-  min-height: 320px;
-  background-image: url(../../../images/promo-logo.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Адаптив  */
+
+@media screen and (max-width: 768px) {
+  .promo {
+    padding: 228px 19px 240px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .promo {
+    padding: 144px 10px 180px;
+  }
+
+  .promo__container {
+    min-height: 248px;
+  }
+  
+  .promo__title {
+    max-width: 300px;
+    font-size: 31px;
+    line-height: 39px;
+  }
 }
 
 
