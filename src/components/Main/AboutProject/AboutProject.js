@@ -27,8 +27,8 @@ function AboutProject() {
         </li>
       </ul>
       <div className='about-project__time-line'>
-        <div className='about-project__time-line-blue'>1 неделя</div>
-        <div className='about-project__time-line-grey'>4 недели</div>
+        <p className='about-project__time-line-text about-project__time-line-blue'>1 неделя</p>
+        <p className='about-project__time-line-text about-project__time-line-grey'>4 недели</p>
         <span className='about-project__time-line-signature'>Back-end</span>
         <span className='about-project__time-line-signature'>Front-end</span>  
       </div>
