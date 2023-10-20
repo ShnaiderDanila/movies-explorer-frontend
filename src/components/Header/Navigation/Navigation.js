@@ -2,23 +2,32 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import './Navigation.css';
 
-function Navigation({ isLoggedIn }) {
+function Navigation({ isLoggedIn, burgerMenuIsOpen }) {
 
   if (isLoggedIn) {
     return (
-      <nav className="navigation">
-        <ul className="navigation__menu">
+      <nav className={`navigation ${burgerMenuIsOpen && 'navigation-white-overlay'}`}>
+        <ul className='navigation__menu'>
+          {burgerMenuIsOpen &&
+            <li className='navigation__menu-item'>
+              <NavLink
+                to='/'
+                className={({ isActive }) => `navigation__link navigation__link-home ${isActive && 'navigation__link_active'}`}>
+                Главная
+              </NavLink>
+            </li>
+          }
           <li className="navigation__menu-item">
             <NavLink
               to='/movies'
-              className={({ isActive }) => `${isActive ? 'navigation__link_active' : 'navigation__link'}`}>
+              className={({ isActive }) => `navigation__link ${isActive && 'navigation__link_active'}`}>
               Фильмы
             </NavLink>
           </li>
           <li className="navigation__menu-item">
             <NavLink
               to='/saved-movies'
-              className={({ isActive }) => ` ${isActive ? 'navigation__link_active' : 'navigation__link'}`}>
+              className={({ isActive }) => `navigation__link ${isActive && 'navigation__link_active'}`}>
               Сохранённые фильмы
             </NavLink>
           </li>
