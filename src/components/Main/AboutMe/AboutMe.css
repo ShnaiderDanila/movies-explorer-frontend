@@ -58,7 +58,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 875px) {
   .about-me {
     padding: 90px 50px;
   }
@@ -86,7 +86,7 @@
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 685px) {
   .about-me {
     padding: 73px 14px;
   }
@@ -98,6 +98,7 @@
   }
 
   .about-me__container {
+    margin: 0 auto;
     max-width: 292px;
   } 
 
@@ -107,6 +108,7 @@
   }
 
   .about-me__photo {
+    margin: 0 auto;
     max-width: 292px;
     min-height: 352px;
   }
