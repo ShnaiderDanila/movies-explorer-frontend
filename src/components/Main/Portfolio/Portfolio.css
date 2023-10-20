@@ -36,10 +36,6 @@
   transition: opacity 0.3s ease;
 }
 
-.portfolio__link:hover {
-  opacity: 0.7;
-}
-
 .portfolio__link-icon {
   margin-top: 3px;
   margin-right: 6px;
@@ -54,4 +50,47 @@
 
 .portfolio__list-item:last-child {
   padding: 0;
+}
+
+/* Адаптив  */
+
+@media screen and (min-width: 769px) {
+  .portfolio__link:hover {
+    opacity: 0.7;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .portfolio {
+    padding: 0 50px 90px;
+  }
+
+  .portfolio__link {
+    font-size: 28px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .portfolio {
+    padding: 0 14px 70px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+  }
+
+  .portfolio__list {
+    margin: 40px 0 0 0;
+  }
+
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__link-icon {
+    margin: 0 4px 0 0;
+    max-width: 11px;
+    max-height: 25px;
+  }
 }
