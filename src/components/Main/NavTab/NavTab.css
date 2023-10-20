@@ -21,10 +21,28 @@
   transition: opacity 0.3s ease;
 }
 
-.nav-tab__link:hover {
-  opacity: 0.7;
-}
-
 .nav-tab__list-item {
   font-size: 0;
+}
+
+/* Адаптив  */
+
+@media screen and (min-width: 769px) {
+  .nav-tab__link:hover {
+    opacity: 0.7;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .nav-tab {
+    padding: 25px 53px;
+  }
+
+  .nav-tab__list {
+    gap: 24px;
+  }
+  
+  .nav-tab__link {
+    font-size: 11px;
+  }
 }
