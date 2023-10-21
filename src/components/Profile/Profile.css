@@ -60,25 +60,16 @@
   padding: 0;
   background-color: inherit;
   border: 0;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.profile__button:hover {
-  opacity: 0.8;
-}
-
-.profile__button-edit {
   font-size: 13px;
   line-height: 15.73px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 
 .profile__button-exit {
   margin-top: 18px;
   color: #ff004d;
-  font-size: 13px;
   font-weight: 500;
-  line-height: 15.73px;
 }
 
 .profile__button-save {
@@ -110,4 +101,46 @@
 
 .profile__warning_enabled {
   display: block;
+}
+
+
+/* Адаптив  */
+
+@media screen and (min-width: 769px) {
+  .profile__button:hover {
+    opacity: 0.8;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    padding: 236px 30px 269px;
+  }
+
+  .profile__form {
+    margin: 80px auto 0 auto;
+  }
+
+  .profile__buttons {
+    margin: 210px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .profile {
+    padding: 70px 30px 40px;
+  }
+
+  .profile__form {
+    margin: 65px auto 0 auto;
+  }
+
+  .profile__buttons {
+    margin: 379px 0 0 0;
+  }
+
+  .profile__button {
+    font-size: 12px;
+    line-height: 14.52px;
+  }
 }
