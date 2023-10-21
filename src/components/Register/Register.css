@@ -52,6 +52,10 @@
   line-height: 16.94px;
 }
 
+.register__input:focus {
+  border-bottom: 1px solid #3456f3;
+}
+
 .register__input_invalid {
   color: #ee3465;
 }
