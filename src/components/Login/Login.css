@@ -8,10 +8,14 @@
 }
 
 .login__title {
-  margin: 38px 0;
+  margin: 38px 0 0 0;
   font-size: 24px;
   font-weight: 500;
   line-height: 29.05px;
+}
+
+.login__form {
+  margin: 38px 0 0 0;
 }
 
 .login__fieldset {
@@ -79,10 +83,6 @@
   transition: opacity 0.3s ease;
 }
 
-.login__signin-button:hover {
-  opacity: 0.8;
-}
-
 .login__signin-button_disabled {
   background-color: #f8f8f8;
   color: #c2c2c2;
@@ -108,6 +108,50 @@
   transition: opacity 0.3s ease;
 }
 
-.login__signup-button:hover {
-  opacity: 0.8;
+/* Адаптив  */
+
+@media screen and (min-width: 769px) {
+  .login__signin-button:hover {
+    opacity: 0.8;
+  }
+
+  .login__signup-button:hover {
+    opacity: 0.8;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    padding: 232px 30px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .login {
+    padding: 56px 30px 30px;
+  }
+
+  .login__box {
+    text-align: center;
+  }
+
+  .login__title {
+    margin: 48px 0 0 0;
+  }
+
+  .login__form {
+    margin: 78px 0 0 0;
+  }
+
+  .login__signin-button {
+    margin: 291px auto 0 auto;
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+
+  .login__signup {
+    margin: 14px 0 0 0;
+    font-size: 12px;
+    line-height: 14.52px;
+  }
 }
