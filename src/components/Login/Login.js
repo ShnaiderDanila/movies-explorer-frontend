@@ -16,7 +16,7 @@ function Login() {
           <Logo />
           <h2 className='login__title'>Рады видеть!</h2>
         </div>
-        <form className='login__form' noValidate>
+        <form className='login__form'>
           <fieldset className='login__fieldset'>
             <label className='login__label'>
               <span className='login__placeholder'>E-mail</span>
