@@ -12,8 +12,10 @@ function Login() {
   return (
     <main className='login'>
       <div className='login__container'>
-        <Logo />
-        <h2 className='login__title'>Рады видеть!</h2>
+        <div className='login__box'>
+          <Logo />
+          <h2 className='login__title'>Рады видеть!</h2>
+        </div>
         <form className='login__form' noValidate>
           <fieldset className='login__fieldset'>
             <label className='login__label'>
