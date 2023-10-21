@@ -21,7 +21,7 @@ function Portfolio() {
           </a>
         </li>
         <li className='portfolio__list-item'>
-          <a className='portfolio__link' href='https://mesto.shnd3r.nomoredomainsicu.ru/' target='_blank' rel="noreferrer">
+          <a className='portfolio__link' href='https://github.com/Shnd3r/react-mesto-api-full-gha' target='_blank' rel="noreferrer">
             Одностраничное приложение
             <img className='portfolio__link-icon' src={pointerIcon} alt='Иконка стрелки'></img>
           </a>
