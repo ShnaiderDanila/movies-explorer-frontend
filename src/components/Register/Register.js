@@ -7,7 +7,7 @@ import Logo from '../Logo/Logo';
 function Register() {
 
   // Временная стейт переменная для отображения ошибкок инпутов в JSX разметке
-  const [inputError] = useState(true);
+  const [inputError] = useState(false);
 
   return (
     <main className='register'>
@@ -16,7 +16,7 @@ function Register() {
           <Logo />
           <h2 className='register__title'>Добро пожаловать!</h2>
         </div>
-        <form className='register__form' noValidate>
+        <form className='register__form'>
           <fieldset className='register__fieldset'>
             <label className='register__label'>
               <span className='register__placeholder'>Имя</span>
@@ -24,7 +24,9 @@ function Register() {
                 className={`register__input ${inputError && 'register__input_invalid'}`}
                 name='name'
                 type='text'
-                required>
+                required
+                minLength='2'
+                maxLength='30'>
               </input>
               <span
                 className={`register__input-error ${inputError && 'register__input-error_active'}`}>
