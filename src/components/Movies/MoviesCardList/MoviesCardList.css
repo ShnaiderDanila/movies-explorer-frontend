@@ -1,6 +1,5 @@
 .movies-card-list {
   padding: 70px 70px 80px;
-  box-sizing: border-box;
 }
 
 .movies-card-list__list {
@@ -10,8 +9,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, 270px);
   gap: 32px 20px;
-  justify-content: center;
-  box-sizing: border-box;
 }
 
 .movies-card-list__button-more {
@@ -47,6 +44,7 @@
   .movies-card-list__list {
     grid-template-columns: repeat(auto-fit, 339px);
     gap: 36px 30px;
+    justify-content: center;
   }
 }
 
