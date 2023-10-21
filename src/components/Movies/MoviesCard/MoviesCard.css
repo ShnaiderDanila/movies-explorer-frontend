@@ -6,7 +6,7 @@
 }
 
 .movies-card__image {
-  width: 270px;
+  width: 100%;
   height: 151px;
   border-radius: 9px 9px 0 0;
   object-fit: cover;
@@ -58,14 +58,37 @@
   transition: all 0.3s ease;
 }
 
-.movies-card__delete-button:hover {
-  opacity: 0.8;
-}
-
 .movies-card__duration {
   margin: 10px 0 0 0;
   color: #a0a0a0;
   font-size: 11px;
   line-height: 13.31px;
-  overflow: hidden;
+}
+
+/* Адаптив  */
+
+@media screen and (min-width: 769px) {
+  .movies-card__delete-button:hover {
+    opacity: 0.8;
+  }
+}
+
+@media screen and (max-width: 1007px) {
+  .movies-card {
+    max-width: 339px;
+  }
+
+  .movies-card__image {
+    height: 190px;
+  }
+}
+
+@media screen and (max-width: 745px) {
+  .movies-card {
+    max-width: 300px;
+  }
+
+  .movies-card__image {
+    height: 168px;
+  }
 }
