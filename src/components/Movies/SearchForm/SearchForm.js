@@ -14,17 +14,19 @@ function SearchForm() {
   return (
     <section className='search-form'>
       <form className='search-form__form'>
-        <input className='search-form__input'
-          id='film'
-          name='film'
-          type='text'
-          placeholder='Фильм'
-          value={film || ''}
-          onChange={handleChangeFilm}
-        />
-        <div className='search-form__container'>
+        <div className='search-form__box'>
+          <input className='search-form__input'
+            id='film'
+            name='film'
+            type='text'
+            placeholder='Фильм'
+            value={film || ''}
+            onChange={handleChangeFilm}
+          />
           <button className='search-form__button' type='submit' />
-          <hr className='search-form__line' />
+        </div>
+        <hr className='search-form__line' />
+        <div className='search-form__container'>
           <FilterCheckbox />
           <label className='search-form__text' htmlFor='switch'>Короткометражки</label>
         </div>
