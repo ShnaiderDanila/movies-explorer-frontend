@@ -30,7 +30,39 @@
   transition: opacity 0.3s ease;
 }
 
-.not-found__button-back:hover {
-  opacity: 0.8;
+/* Адаптив  */
+
+@media screen and (min-width: 769px) {
+  .not-found__button-back:hover {
+    opacity: 0.8;
+  }
 }
 
+@media screen and (max-width: 768px) {
+  .not-found {
+    padding: 408px 0 222px 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .not-found {
+    padding: 329px 10px 30px;
+  }
+
+  .not-found__title {
+    font-size: 80px;
+    line-height: 96.82px;
+  }
+
+  .not-found__subtitle {
+    margin: 10px 0 0 0;
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+
+  .not-found__button-back {
+    margin: 284px auto 0 auto;
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+}
