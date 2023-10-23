@@ -1,0 +1,35 @@
+.main {
+  flex: 1 1 auto;
+  word-wrap: break-word;
+}
+
+/* Заголовки каждой секции в блоке main */
+
+.main__subtitle {
+  margin: 0;
+  max-width: 600px;
+  font-size: 22px;
+  line-height: 26.63px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+
+/* Линия под заголовком каждой секции в блоке main */
+
+.main__subtitle-line {
+  margin: 23px 0 0 0;
+  height: 1px;
+  background-color: black;
+}
+
+@media screen and (max-width: 425px) {
+  .main__subtitle {
+    max-width: 284px;
+    font-size: 18px;
+    line-height: 21.78px;
+  }
+
+  .main__subtitle-line {
+    margin: 28px 0 0 0;
+  }
+}

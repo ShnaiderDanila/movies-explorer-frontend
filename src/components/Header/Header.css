@@ -1,0 +1,88 @@
+.header {
+  background-color: #dddee3;
+  padding: 18px 70px;
+  display: flex;
+  align-items: center;
+}
+
+.header_white {
+  background-color: transparent;
+}
+
+.header__burger-menu-button {
+  display: none;
+  padding: 0;
+  border: none;
+  min-width: 44px;
+  min-height: 44px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+
+.header__burger-menu-button_open {
+  background-image: url(../../images/burger-menu-icon.svg);
+}
+
+.header__burger-menu-button_close {
+  background-image: url(../../images/cross.svg);
+}
+
+/* Адаптив  */
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 15px 30px;
+    justify-content: space-between;
+  }
+
+  .header-black-overlay::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .header__burger-menu-button {
+    display: block;
+    z-index: 4;
+  }
+
+  .header__burger-menu-button_close {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+  }
+
+  /* Класс для body. Запрет скролла страницы при открытом бургер-меню */
+  .no-scroll {
+    overflow: hidden;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .header {
+    padding: 15px 14px;
+  }
+
+  .header__burger-menu-button {
+    min-width: 40px;
+    min-height: 43px;
+  }
+
+  .header__burger-menu-button_open {
+    background-image: url(../../images/burger-menu-icon-phone.svg);
+  }
+
+  .header__burger-menu-button_close {
+    position: absolute;
+    top: 6px;
+    right: 7px;
+  }
+}

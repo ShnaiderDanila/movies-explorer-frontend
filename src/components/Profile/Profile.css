@@ -1,0 +1,146 @@
+.profile {
+  padding: 74px 30px 70px;
+}
+
+.profile__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29.05px;
+  text-align: center;
+}
+
+.profile__form {
+  margin: 106px auto 0 auto;
+  max-width: 410px;
+}
+
+.profile__fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.profile__label {
+  padding: 17px 0 16px 0;
+  border-bottom: 1px solid #e8e8e8;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile__label:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.profile__label-name {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 13.31px;
+}
+
+.profile__input {
+  max-width: 122px;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  outline: none;
+  font-size: 11px;
+  line-height: 13.31px;
+  text-align: right;
+}
+
+.profile__buttons {
+  margin: 220px 0 0 0;
+}
+
+.profile__button {
+  display: block;
+  margin: 0 auto 0 auto;
+  padding: 0;
+  background-color: inherit;
+  border: 0;
+  font-size: 13px;
+  line-height: 15.73px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.profile__button-exit {
+  margin-top: 18px;
+  color: #ff004d;
+  font-weight: 500;
+}
+
+.profile__button-save {
+  margin: 224px 0 0 0;
+  width: 100%;
+  min-height: 45px;
+  background-color: #3456f3;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+}
+
+.profile__button-save_disabled {
+  margin: 20px 0 0 0;
+  color: #c2c2c2;
+  background-color: #f8f8f8;
+}
+
+.profile__warning {
+  display: none;
+  margin: 191px 0 0 0;
+  color: #ff004c;
+  font-size: 11px;
+  line-height: 13.31px;
+  text-align: center;
+}
+
+.profile__warning_enabled {
+  display: block;
+}
+
+
+/* Адаптив  */
+
+@media screen and (min-width: 769px) {
+  .profile__button:hover {
+    opacity: 0.8;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    padding: 236px 30px 269px;
+  }
+
+  .profile__form {
+    margin: 80px auto 0 auto;
+  }
+
+  .profile__buttons {
+    margin: 210px 0 0 0;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .profile {
+    padding: 70px 30px 40px;
+  }
+
+  .profile__form {
+    margin: 65px auto 0 auto;
+  }
+
+  .profile__buttons {
+    margin: 379px 0 0 0;
+  }
+
+  .profile__button {
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+}

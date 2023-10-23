@@ -1,0 +1,161 @@
+.login {
+  padding: 70px 30px;
+}
+
+.login__container {
+  max-width: 396px;
+  margin: 0 auto;
+}
+
+.login__title {
+  margin: 38px 0 0 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29.05px;
+}
+
+.login__form {
+  margin: 38px 0 0 0;
+}
+
+.login__fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.login__label {
+  margin: 0 0 5px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login__label:last-child {
+  margin: 0;
+}
+
+.login__placeholder {
+  color: #a0a0a0;
+  font-size: 10px;
+  line-height: 12.1px;
+}
+
+.login__input {
+  padding: 0 0 10px 0;
+  border: none;
+  border-bottom: 1px solid #e8e8e8;
+  background-color: inherit;
+  outline: none;
+  color: #000;
+  font-size: 14px;
+  line-height: 16.94px;
+}
+
+.login__input:focus {
+  border-bottom: 1px solid #3456f3;
+}
+
+.login__input_invalid {
+  color: #ee3465;
+}
+
+.login__input-error {
+  color: transparent;
+  font-size: 10px;
+  line-height: 12.1px;
+}
+
+.login__input-error_active {
+  color: #ee3465
+}
+
+.login__signin-button {
+  display: block;
+  margin: 202px auto 0 auto;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  width: 100%;
+  min-height: 45px;
+  background-color: #3456f3;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.login__signin-button_disabled {
+  background-color: #f8f8f8;
+  color: #c2c2c2;
+}
+
+.login__signup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 16px 0 0 0;
+  font-size: 14px;
+  line-height: 16.94px;
+}
+
+.login__signup-signature {
+  color: #a0a0a0;
+}
+
+.login__signup-button {
+  color: #3456f3;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Адаптив  */
+
+@media screen and (min-width: 769px) {
+  .login__signin-button:hover {
+    opacity: 0.8;
+  }
+
+  .login__signup-button:hover {
+    opacity: 0.8;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .login {
+    padding: 232px 30px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .login {
+    padding: 56px 30px 30px;
+  }
+
+  .login__box {
+    text-align: center;
+  }
+
+  .login__title {
+    margin: 48px 0 0 0;
+  }
+
+  .login__form {
+    margin: 78px 0 0 0;
+  }
+
+  .login__signin-button {
+    margin: 291px auto 0 auto;
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+
+  .login__signup {
+    margin: 14px 0 0 0;
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+}
