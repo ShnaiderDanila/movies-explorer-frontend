@@ -9,7 +9,7 @@ import { cards, savedCards } from '../../../utils/constants'
 import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
+function MoviesCardList({isLoading}) {
   
   const { pathname } = useLocation();
 
@@ -28,9 +28,6 @@ function MoviesCardList() {
       setLimit(5)
     }
   }, [width]);
-
-  // Временая стейт переменная для отображения Прелоадера
-  const [isLoading] = useState(false);
 
   if (isLoading) {
     return <Preloader />

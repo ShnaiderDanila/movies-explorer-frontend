@@ -16,9 +16,11 @@ import NotFound from '../NotFound/NotFound';
 
 function App() {
 
-  // Временая стейт переменная авторизованного пользователя, 
-  // для изменения отображения jsx верстки компонента Header
+  // Cтейт переменная авторизованного пользователя, 
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  // Cтейт переменная для отображения Прелоадера
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="wrapper">
@@ -26,9 +28,15 @@ function App() {
       <Routes>
         <Route path='*' element={<NotFound />} />
         <Route path='/' element={<Main />} />
-        <Route path='/movies' element={<ProtectedRoute element={Movies} isLoggedIn={isLoggedIn}/> } />
-        <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn}/>} />
-        <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn}/>} />
+        <Route path='/movies' element=
+          {
+            <ProtectedRoute
+              element={Movies}
+              isLoggedIn={isLoggedIn}
+              isLoading={isLoading} />
+          } />
+        <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />} />
+        <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} />} />
         <Route path='/signup' element={<Register />} />
         <Route path='/signin' element={<Login />} />
       </Routes>
