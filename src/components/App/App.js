@@ -19,9 +19,6 @@ function App() {
   // Cтейт переменная авторизованного пользователя, 
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  // Cтейт переменная для отображения Прелоадера
-  const [isLoading, setIsLoading] = useState(false);
-
   return (
     <div className="wrapper">
       <Header isLoggedIn={isLoggedIn} />
@@ -32,8 +29,7 @@ function App() {
           {
             <ProtectedRoute
               element={Movies}
-              isLoggedIn={isLoggedIn}
-              isLoading={isLoading} />
+              isLoggedIn={isLoggedIn} />
           } />
         <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />} />
         <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} />} />
