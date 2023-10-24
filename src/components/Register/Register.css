@@ -56,14 +56,11 @@
   border-bottom: 1px solid #3456f3;
 }
 
-.register__input_invalid {
-  color: #ee3465;
-}
-
 .register__input-error {
   color: transparent;
   font-size: 10px;
   line-height: 12.1px;
+  min-height: 25px;
 }
 
 .register__input-error_active {
@@ -72,7 +69,7 @@
 
 .register__signup-button {
   display: block;
-  margin: 133px auto 0 auto;
+  margin: 95px auto 0 auto;
   padding: 0;
   border: none;
   border-radius: 3px;
@@ -143,12 +140,16 @@
     margin: 48px 0 0 0;
   }
 
+  .register__label {
+    margin: 0 0 10px 0;
+  } 
+
   .register__form {
     margin: 78px 0 0 0;
   }
 
   .register__signup-button {
-    margin: 221px auto 0 auto;
+    margin: 162px auto 0 auto;
     font-size: 12px;
     line-height: 14.52px;
   }

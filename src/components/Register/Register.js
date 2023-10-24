@@ -1,13 +1,24 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import useValidation from '../../hooks/useValidation';
+
 import './Register.css';
 
 import Logo from '../Logo/Logo';
 
 function Register() {
 
-  // Временная стейт переменная для отображения ошибкок инпутов в JSX разметке
-  const [inputError] = useState(false);
+  const {
+    inputValues,
+    errorMessages,
+    isValidForm,
+    handleChangeValidation,
+    resetValidation
+  } = useValidation();
+
+  useEffect(() => {
+    resetValidation();
+  }, [resetValidation]);
 
   return (
     <main className='register'>
@@ -16,54 +27,60 @@ function Register() {
           <Logo />
           <h2 className='register__title'>Добро пожаловать!</h2>
         </div>
-        <form className='register__form'>
+        <form className='register__form' noValidate>
           <fieldset className='register__fieldset'>
             <label className='register__label'>
               <span className='register__placeholder'>Имя</span>
               <input
-                className={`register__input ${inputError && 'register__input_invalid'}`}
+                className='register__input'
                 name='name'
                 type='text'
                 required
                 minLength='2'
-                maxLength='30'>
+                maxLength='30'
+                pattern="^[A-Za-zА-Яа-яЁё\-\s]+$"
+                value={inputValues.name || ''}
+                onChange={handleChangeValidation}>
               </input>
-              <span
-                className={`register__input-error ${inputError && 'register__input-error_active'}`}>
-                Что-то пошло не так...
+              <span className={`register__input-error ${!isValidForm && 'register__input-error_active'}`}>
+                {errorMessages.name}
               </span>
             </label>
             <label className='register__label'>
               <span className='register__placeholder'>E-mail</span>
               <input
-                className={`register__input ${inputError && 'register__input_invalid'}`}
+                className='register__input'
                 name='email'
                 type='email'
-                required>
+                required
+                pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
+                value={inputValues.email || ''}
+                onChange={handleChangeValidation}>
               </input>
-              <span
-                className={`register__input-error ${inputError && 'register__input-error_active'}`}>
-                Что-то пошло не так...
+              <span className={`register__input-error ${!isValidForm && 'register__input-error_active'}`}>
+                {errorMessages.email}
               </span>
             </label>
             <label className='register__label'>
               <span className='register__placeholder'>Пароль</span>
               <input
-                className={`register__input ${inputError && 'register__input_invalid'}`}
+                className='register__input'
                 name='password'
                 type='password'
-                required>
+                required
+                minLength='6'
+                value={inputValues.password || ''}
+                onChange={handleChangeValidation}>
               </input>
-              <span
-                className={`register__input-error ${inputError && 'register__input-error_active'}`}>
-                Что-то пошло не так...
+              <span className={`register__input-error ${!isValidForm && 'register__input-error_active'}`}>
+                {errorMessages.password}
               </span>
             </label>
           </fieldset>
           <button
-            className={`register__signup-button ${inputError && 'register__signup-button_disabled'}`}
+            className={`register__signup-button ${!isValidForm && 'register__signup-button_disabled'}`}
             type='submit'
-            disabled={inputError}>
+            disabled={!isValidForm}>
             Зарегистрироваться
           </button>
           <div className='register__signin'>
