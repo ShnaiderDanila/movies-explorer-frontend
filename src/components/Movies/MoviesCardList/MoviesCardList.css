@@ -1,5 +1,5 @@
 .movies-card-list {
-  padding: 70px 70px 80px;
+  padding: 70px 30px 80px;
 }
 
 .movies-card-list__error {
@@ -15,6 +15,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, 270px);
   gap: 32px 20px;
+  justify-content: center;
 }
 
 .movies-card-list__button-more {
