@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
-function MoviesCard({ card }) {
+import convertDurationMovie from '../../../utils/convertDurationMovie';
+
+function MoviesCard({ movie }) {
 
   const { pathname } = useLocation();
   const [isMovieSaved, setIsMovieSaved] = useState(false);
@@ -13,10 +15,12 @@ function MoviesCard({ card }) {
 
   return (
     <li className='movies-card'>
-      <img className='movies-card__image' src={card.image} alt='Обложка фильма' />
+      <a className='movies-card__image-link' href={movie.trailerLink} target="_blank" rel="noreferrer">
+        <img className='movies-card__image' src={`https://api.nomoreparties.co/${movie.image.url}`} alt={movie.nameRU} />
+      </a>
       <div className='movies-card__description'>
         <div className='movies-card__container'>
-          <h3 className='movies-card__title'>{card.name}</h3>
+          <h3 className='movies-card__title'>{movie.nameRU}</h3>
           {pathname === '/saved-movies'
             ? <button
               className='movies-card__delete-button'
@@ -26,7 +30,7 @@ function MoviesCard({ card }) {
               type='button'
               onClick={handleMovieSave} />}
         </div>
-        <p className='movies-card__duration'>{card.duration}</p>
+        <p className='movies-card__duration'>{convertDurationMovie(movie.duration)}</p>
       </div>
     </li>
   )

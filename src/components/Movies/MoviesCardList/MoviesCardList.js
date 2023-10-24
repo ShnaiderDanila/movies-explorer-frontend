@@ -4,13 +4,10 @@ import useWindowResize from '../../../hooks/useWindowResize';
 
 import './MoviesCardList.css';
 
-import { cards, savedCards } from '../../../utils/constants'
-
-import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({isLoading}) {
-  
+function MoviesCardList({ filteredMovies, moviesListError }) {
+
   const { pathname } = useLocation();
 
   // Переменная для отслеживания ширины окна
@@ -29,30 +26,29 @@ function MoviesCardList({isLoading}) {
     }
   }, [width]);
 
-  if (isLoading) {
-    return <Preloader />
-  } else {
-    return (
-      <section className='movies-card-list'>
-        <ul className='movies-card-list__list'>
-          {pathname === '/saved-movies'
-            ? savedCards.map((card, i) => {
-              return (
-                i < limit &&
-                <MoviesCard key={i} card={card} />
-              )
-            })
-            : cards.map((card, i) => {
-              return (
-                i < limit &&
-                <MoviesCard key={i} card={card} />
-              )
-            })}
-        </ul>
-        <button className='movies-card-list__button-more'>Ещё</button>
-      </section>
-    )
-  }
+  return (
+    <section className='movies-card-list'>
+      {moviesListError
+        ? <p className='movies-card-list__error'>{moviesListError}</p>
+        : <>
+          {
+            filteredMovies.length !== 0  &&
+            <>
+              <ul className='movies-card-list__list'>
+                {filteredMovies.map((movie, i) => {
+                  return (
+                    i < limit &&
+                    <MoviesCard key={movie.id} movie={movie} />
+                  )
+                })}
+              </ul>
+              <button className='movies-card-list__button-more'>Ещё</button>
+            </>
+          }
+        </>
+      }
+    </section>
+  )
 }
 
 export default MoviesCardList;
