@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ onGetMovies, setIsNothingFound }) {
+function SearchForm({ onGetMovies }) {
 
   // Переменная состояния инпута поиска по ключевым словам
   const [keyword, setKeyword] = useState('');
@@ -12,19 +13,22 @@ function SearchForm({ onGetMovies, setIsNothingFound }) {
   // Переменная состояния ошибки инпута 
   const [errorInput, setErrorInput] = useState(false);
 
+  const { pathname } = useLocation();
+
   function handleChangeKeyword(evt) {
     setKeyword(evt.target.value)
   }
 
   function handleChangeCheckbox() {
-    // if (!keyword) {
-    //   setErrorInput(true);
-    //   return;
-    // }
     setIsShort(!isShort);
     onGetMovies(keyword, !isShort);
+    if (pathname === '/movies') {
+      localStorage.setItem('isShort', !isShort);
+      localStorage.setItem('keyword', keyword);
+    }
   }
 
+  // Обработка кнопки поиска фильмов
   function handleSearchMovies(evt) {
     evt.preventDefault();
     if (!keyword) {
@@ -32,8 +36,24 @@ function SearchForm({ onGetMovies, setIsNothingFound }) {
       return;
     }
     setErrorInput(false);
+    if (pathname === '/movies') {
+      localStorage.setItem('keyword', keyword);
+    }
     onGetMovies(keyword, isShort)
   }
+
+  // Восстановление результатов предыдущего поиска на странице всех фильмов
+  useEffect(() => {
+    if (pathname === '/movies') {
+      const keyword = localStorage.getItem('keyword');
+      const isShort = JSON.parse(localStorage.getItem('isShort'));
+      keyword && setKeyword(keyword);
+      isShort && setIsShort(isShort);
+      if (keyword || isShort) {
+        onGetMovies(keyword, isShort);
+      }
+    }
+  }, []);
 
   return (
     <section className='search-form'>

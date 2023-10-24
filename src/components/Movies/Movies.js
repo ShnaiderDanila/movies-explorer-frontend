@@ -38,26 +38,38 @@ function Movies() {
     }
   }
 
+  function handleFilterMovies(movies, keyword, isShort) {
+    // Сбрасываем ошибки в списке фильмов
+    setMoviesListError('')
+    const filteredMovies = filterMovies(movies, keyword, isShort)
+    if (filteredMovies.length === 0) {
+      setMoviesListError('По вашему запросу ничего не найдено');
+    }
+    setFilteredMovies(filteredMovies)
+    setIsLoading(false);
+  }
+
   // обработчик кнопки найти фильм
   function handleGetMovies(keyword, isShort) {
     setIsLoading(true);
-    moviesApi
-      .getMovies()
-      .then((inititalMovies) => {
-        setMoviesListError('')
-        // фильтруем фильмы
-        const filteredMovies = filterMovies(inititalMovies, keyword, isShort);
-        if (filteredMovies.length === 0) {
-          setMoviesListError('По вашему запросу ничего не найдено');
-        }
-        setFilteredMovies(filteredMovies)
-      })
-      .catch(() => {
-        setMoviesListError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-      })
-      .finally(() => {
-        setIsLoading(false)
-      });
+    const storedMovies = JSON.parse(localStorage.getItem('movies'));
+    // Проверяем если фильмы в localStorage
+    if (!storedMovies) {
+      moviesApi
+        .getMovies()
+        .then((inititalMovies) => {
+          // Устанавливаем найденные фильмы в localStorage
+          localStorage.setItem('movies', JSON.stringify(inititalMovies));
+          // Запускаем фильтр фильмов
+          handleFilterMovies(inititalMovies, keyword, isShort)
+        })
+        .catch(() => {
+          setMoviesListError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+        })
+    } else {
+      // Запускаем фильтр фильмов
+      handleFilterMovies(storedMovies, keyword, isShort)
+    }
   }
 
   return (
