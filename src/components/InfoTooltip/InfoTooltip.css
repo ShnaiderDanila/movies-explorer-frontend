@@ -31,7 +31,6 @@
   text-align: center;
 }
 
-
 .info-tooltip__title {
   margin: 32px 0 0 0;
   font-weight: 900;
@@ -45,7 +44,7 @@
   cursor: pointer;
   min-width: 32px;
   min-height: 32px;
-  background-image: url(../../images/cross.svg);
+  background-image: url(../../images/close-icon.svg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
