@@ -6,7 +6,7 @@ import './Login.css';
 
 import Logo from '../Logo/Logo';
 
-function Login() {
+function Login({ handleSignIn, serverError }) {
 
   const {
     inputValues,
@@ -19,6 +19,11 @@ function Login() {
   useEffect(() => {
     resetValidation();
   }, [resetValidation]);
+  
+  function handleLoginSubmit(evt) {
+    evt.preventDefault();
+    handleSignIn(inputValues.email, inputValues.password);
+  }
 
   return (
     <main className='login'>
@@ -27,7 +32,7 @@ function Login() {
           <Logo />
           <h2 className='login__title'>Рады видеть!</h2>
         </div>
-        <form className='login__form'>
+        <form className='login__form' onSubmit={handleLoginSubmit} noValidate>
           <fieldset className='login__fieldset'>
             <label className='login__label'>
               <span className='login__placeholder'>E-mail</span>
@@ -62,12 +67,15 @@ function Login() {
               </span>
             </label>
           </fieldset>
-          <button
-            className={`login__signin-button ${!isValidForm && 'login__signin-button_disabled'}`}
-            type='submit'
-            disabled={!isValidForm}>
-            Войти
-          </button>
+          <div className='login__button-container'>
+            <p className='login__error'>{serverError}</p>
+            <button
+              className={`login__signin-button ${!isValidForm && 'login__signin-button_disabled'}`}
+              type='submit'
+              disabled={!isValidForm}>
+              Войти
+            </button>
+          </div>
           <div className='login__signup'>
             <span className='login__signup-signature'>Ещё не зарегистрированы?</span>
             <Link to='/signup' className="login__signup-button">Регистрация</Link>
@@ -79,3 +87,5 @@ function Login() {
 }
 
 export default Login;
+
+ 

@@ -67,9 +67,21 @@
   color: #ee3465
 }
 
+.login__button-container {
+  margin: 136px auto 0 auto;
+}
+
+.login__error {
+  margin: 0;
+  min-height: 20px;
+  color: #ee3465;
+  font-size: 14px;
+  text-align: center;
+}
+
 .login__signin-button {
   display: block;
-  margin: 177px auto 0 auto;
+  margin: 20px 0 0 0;
   padding: 0;
   border: none;
   border-radius: 3px;
@@ -144,8 +156,15 @@
     margin: 78px 0 0 0;
   }
 
+  .login__button-container {
+    margin: 224px auto 0 auto;
+  }
+
+  .login__error {
+    font-size: 12px;
+  }
+
   .login__signin-button {
-    margin: 265px auto 0 auto;
     font-size: 12px;
     line-height: 14.52px;
   }

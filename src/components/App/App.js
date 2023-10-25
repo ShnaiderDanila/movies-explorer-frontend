@@ -20,6 +20,8 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 function App() {
 
+  const navigate = useNavigate();
+
   // Cтейт переменная авторизованного пользователя, 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -30,6 +32,49 @@ function App() {
   const [infoTooltipTitle, setInfoTooltipTitle] = useState('');
 
   const [serverError, setServerError] = useState('');
+
+  // Проверка авторизации пользователя и добавление информации о текущем пользователе в глобальный контекст
+  const checkUserAuthorization = useCallback(() => {
+    mainApi.getUserInfo()
+      .then((user) => {
+        if (user) {
+          setIsLoggedIn(true);
+          setCurrentUser({
+            email: user.email,
+            name: user.name
+          });
+        }
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
+  }, [navigate])
+
+  // Проверка авторизации пользователя
+  useEffect(() => {
+    checkUserAuthorization();
+  }, [checkUserAuthorization])
+
+  // Обработка авторизации пользователя
+  function handleSignIn(email, password) {
+    mainApi.signin(email, password)
+      .then((res) => {
+        if (res) {
+          setIsLoggedIn(true)
+          setInfoTooltipTitle('Вход выполнен успешно!')
+          setIsInfoTooltipOpen(true)
+          navigate('/movies', { replace: true });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.includes('401')) {
+          setServerError('Неправильные почта или пароль');
+        } else {
+          setServerError('Что-то пошло не так! Попробуйте ещё раз.');
+        }
+      });
+  }
 
   return (
     <div className="wrapper">
@@ -47,7 +92,13 @@ function App() {
           <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />} />
           <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} />} />
           <Route path='/signup' element={<Register />} />
-          <Route path='/signin' element= {<Login />} />
+          <Route path='/signin' element=
+            {
+              <Login
+                handleSignIn={handleSignIn}
+                serverError={serverError} />
+            }
+          />
         </Routes>
         <Footer />
         <InfoTooltip
