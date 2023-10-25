@@ -56,14 +56,11 @@
   border-bottom: 1px solid #3456f3;
 }
 
-.login__input_invalid {
-  color: #ee3465;
-}
-
 .login__input-error {
   color: transparent;
   font-size: 10px;
   line-height: 12.1px;
+  min-height: 25px;
 }
 
 .login__input-error_active {
@@ -72,7 +69,7 @@
 
 .login__signin-button {
   display: block;
-  margin: 202px auto 0 auto;
+  margin: 177px auto 0 auto;
   padding: 0;
   border: none;
   border-radius: 3px;
@@ -148,7 +145,7 @@
   }
 
   .login__signin-button {
-    margin: 291px auto 0 auto;
+    margin: 265px auto 0 auto;
     font-size: 12px;
     line-height: 14.52px;
   }

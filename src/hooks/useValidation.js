@@ -6,7 +6,7 @@ function useValidation () {
   // Стейт-переменная текста ошибки валидации
   const [errorMessages, setErrorMessages] = useState({});
     // Стейт-переменная валидности формы 
-  const [isValidForm, setIsValidForm] = useState(true);
+  const [isValidForm, setIsValidForm] = useState(false);
 
   // Функция обработки валидации при срабатывании события
   function handleChangeValidation(evt) {
