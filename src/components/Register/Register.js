@@ -6,8 +6,8 @@ import './Register.css';
 
 import Logo from '../Logo/Logo';
 
-function Register() {
-
+function Register({ handleSignUp, serverError }) {
+ 
   const {
     inputValues,
     errorMessages,
@@ -20,6 +20,11 @@ function Register() {
     resetValidation();
   }, [resetValidation]);
 
+  function handleRegisterSubmit(evt) {
+    evt.preventDefault();
+    handleSignUp(inputValues.email, inputValues.password, inputValues.name);
+  }
+
   return (
     <main className='register'>
       <div className='register__container'>
@@ -27,7 +32,7 @@ function Register() {
           <Logo />
           <h2 className='register__title'>Добро пожаловать!</h2>
         </div>
-        <form className='register__form' noValidate>
+        <form className='register__form' noValidate onSubmit={handleRegisterSubmit}>
           <fieldset className='register__fieldset'>
             <label className='register__label'>
               <span className='register__placeholder'>Имя</span>
@@ -77,12 +82,15 @@ function Register() {
               </span>
             </label>
           </fieldset>
-          <button
-            className={`register__signup-button ${!isValidForm && 'register__signup-button_disabled'}`}
-            type='submit'
-            disabled={!isValidForm}>
-            Зарегистрироваться
-          </button>
+          <div className='register__button-container'>
+            <p className='register__error'>{serverError}</p>
+            <button
+              className={`register__signup-button ${!isValidForm && 'register__signup-button_disabled'}`}
+              type='submit'
+              disabled={!isValidForm}>
+              Зарегистрироваться
+            </button>
+          </div>
           <div className='register__signin'>
             <span className='register__signin-signature'>Уже зарегистрированы?</span>
             <Link to='/signin' className="register__signin-button">Войти</Link>
@@ -94,3 +102,4 @@ function Register() {
 }
 
 export default Register;
+

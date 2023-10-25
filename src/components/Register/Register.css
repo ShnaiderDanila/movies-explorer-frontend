@@ -67,9 +67,21 @@
   color: #ee3465
 }
 
+.register__button-container {
+  margin: 55px auto 0 auto;
+}
+
+.register__error {
+  margin: 0;
+  min-height: 20px;
+  color: #ee3465;
+  font-size: 14px;
+  text-align: center;
+}
+
 .register__signup-button {
+  margin: 20px 0 0 0;
   display: block;
-  margin: 95px auto 0 auto;
   padding: 0;
   border: none;
   border-radius: 3px;
@@ -148,8 +160,15 @@
     margin: 78px 0 0 0;
   }
 
+  .register__button-container {
+    margin: 120px auto 0 auto;
+  }
+
+  .register__error {
+    font-size: 12px;
+  }
+
   .register__signup-button {
-    margin: 162px auto 0 auto;
     font-size: 12px;
     line-height: 14.52px;
   }

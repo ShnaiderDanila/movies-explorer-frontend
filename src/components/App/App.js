@@ -48,7 +48,7 @@ function App() {
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       });
-  }, [navigate])
+  }, [])
 
   // Проверка авторизации пользователя
   useEffect(() => {
@@ -61,7 +61,7 @@ function App() {
       .then((res) => {
         if (res) {
           setIsLoggedIn(true)
-          setInfoTooltipTitle('Вход выполнен успешно!')
+          setInfoTooltipTitle(res.message)
           setIsInfoTooltipOpen(true)
           navigate('/movies', { replace: true });
         }
@@ -74,6 +74,23 @@ function App() {
           setServerError('Что-то пошло не так! Попробуйте ещё раз.');
         }
       });
+  }
+
+  // Обработка регистрации пользователя
+  function handleSignUp(email, password, name) {
+    mainApi.signup(email, password, name)
+      .then((res) => {
+        if (res) {
+          handleSignIn(email, password);
+        }
+      })
+      .catch((err) => {
+        if (err.includes('409')) {
+          setServerError('Пользователь с таким email уже зарегистрирован');
+        } else {
+          setServerError('Что-то пошло не так! Попробуйте ещё раз.');
+        }
+      })
   }
 
   return (
@@ -91,14 +108,16 @@ function App() {
             } />
           <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />} />
           <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} />} />
-          <Route path='/signup' element={<Register />} />
+          <Route path='/signup' element=
+            {<Register
+              handleSignUp={handleSignUp}
+              serverError={serverError} />
+            } />
           <Route path='/signin' element=
-            {
-              <Login
-                handleSignIn={handleSignIn}
-                serverError={serverError} />
-            }
-          />
+            {<Login
+              handleSignIn={handleSignIn}
+              serverError={serverError} />
+            } />
         </Routes>
         <Footer />
         <InfoTooltip
