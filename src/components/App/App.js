@@ -22,16 +22,27 @@ function App() {
 
   const navigate = useNavigate();
 
-  // Cтейт переменная авторизованного пользователя, 
+  // Cтейт переменная авторизованного пользователя
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Глобальная стейт переменная текущего пользователя
   const [currentUser, setCurrentUser] = useState({});
 
   // Стейт-переменные состояния попапа infoTooltip
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipTitle, setInfoTooltipTitle] = useState('');
 
+  // Cтейт переменная ошибок сервера
   const [serverError, setServerError] = useState('');
+
+  // Сброс ошибок сервера при переходе на другой роут
+  const resetErrorMessage = useCallback(() => {
+    setServerError('')
+  }, [])
+
+  useEffect(() => {
+    resetErrorMessage()
+  }, [resetErrorMessage, navigate]);
 
   // Проверка авторизации пользователя и добавление информации о текущем пользователе в глобальный контекст
   const checkUserAuthorization = useCallback(() => {
@@ -43,6 +54,7 @@ function App() {
             email: user.email,
             name: user.name
           });
+          navigate('/movies', { replace: true });
         }
       })
       .catch((err) => {
@@ -52,7 +64,7 @@ function App() {
 
   // Проверка авторизации пользователя
   useEffect(() => {
-    checkUserAuthorization();
+    checkUserAuthorization()
   }, [checkUserAuthorization])
 
   // Обработка авторизации пользователя
@@ -70,8 +82,10 @@ function App() {
         console.log(err);
         if (err.includes('401')) {
           setServerError('Неправильные почта или пароль');
-        } else {
-          setServerError('Что-то пошло не так! Попробуйте ещё раз.');
+        } else if (err.includes('429'))
+          setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
+        else {
+          setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
         }
       });
   }
@@ -87,11 +101,36 @@ function App() {
       .catch((err) => {
         if (err.includes('409')) {
           setServerError('Пользователь с таким email уже зарегистрирован');
-        } else {
-          setServerError('Что-то пошло не так! Попробуйте ещё раз.');
+        } else if (err.includes('429')) {
+          setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
+        }
+        else {
+          setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
         }
       })
   }
+
+  // Обработка обновления данных пользователя
+  function handleUpdateUserInfo(email, name) {
+    mainApi.updateUserInfo(email, name)
+      .then(() => {
+        setServerError('');
+        setInfoTooltipTitle('Редактирование выполнено успешно!')
+        setIsInfoTooltipOpen(true)
+        setCurrentUser({ email, name });
+      })
+      .catch((err) => {
+        if (err.includes('400')) {
+          setServerError('Введена некорректная электронная почта');
+        } else if (err.includes('429')) {
+          setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
+        }
+        else {
+          setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
+        }
+      })
+  }
+
 
   return (
     <div className="wrapper">
@@ -107,7 +146,15 @@ function App() {
                 isLoggedIn={isLoggedIn} />
             } />
           <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />} />
-          <Route path='/profile' element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} />} />
+          <Route path='/profile' element=
+            {<ProtectedRoute
+              element={Profile}
+              isLoggedIn={isLoggedIn}
+              handleUpdateUserInfo={handleUpdateUserInfo}
+              currentUser={currentUser}
+              serverError={serverError}
+              setServerError={setServerError} />
+            } />
           <Route path='/signup' element=
             {<Register
               handleSignUp={handleSignUp}

@@ -94,7 +94,7 @@
 }
 
 .profile__container {
-  margin: 101px 0 0 0;
+  margin: 61px 0 0 0;
 }
 
 .profile__button-save {
@@ -116,15 +116,11 @@
 
 .profile__warning {
   margin: 0;
-  display: none;
   color: #ff004c;
   font-size: 11px;
   line-height: 13.31px;
   text-align: center;
-}
-
-.profile__warning_enabled {
-  display: block;
+  min-height: 20px;
 }
 
 /* Адаптив  */
@@ -149,7 +145,7 @@
   }
 
   .profile__container {
-    margin: 90px 0 0 0;
+    margin: 50px 0 0 0;
   }
 }
 
@@ -168,7 +164,7 @@
   }
 
   .profile__container {
-    margin: 258px 0 0 0;
+    margin: 218px 0 0 0;
   }
 
   .profile__button-edit {

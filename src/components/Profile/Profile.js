@@ -3,10 +3,7 @@ import './Profile.css';
 
 import useValidation from '../../hooks/useValidation';
 
-function Profile() {
-
-  const [name] = useState('Данил');
-  const [email] = useState('dan_shnai2001@mail.ru');
+function Profile({ handleUpdateUserInfo, currentUser, serverError }) {
 
   const {
     inputValues,
@@ -21,26 +18,35 @@ function Profile() {
   const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    resetValidation({ email: email, name: name });
-  }, []);
+    resetValidation({ email: currentUser.email, name: currentUser.name });
+    setFormIsEditing(false);
+  }, [resetValidation, currentUser], setFormIsEditing);
 
+  // Проверка однотипности введенных данных с текущими данными пользователя
   useEffect(() => {
-    if (name !== inputValues.name || email !== inputValues.email) {
+    if (currentUser.name !== inputValues.name || currentUser.email !== inputValues.email) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
     }
-  }, [inputValues, isValidForm]);
+  }, [inputValues, isValidForm, currentUser]);
 
-  // Временные функции для проверки JSX верстки
+
+  // Функция для разрешения редактирования формы
   function editProfileForm() {
     setFormIsEditing(true);
   };
 
+  // Функция самбита обновления профиля пользователя
+  function handleSubmitUpdateProfile(evt) {
+    evt.preventDefault();
+    handleUpdateUserInfo(inputValues.email, inputValues.name)
+  }
+
   return (
     <main className='profile'>
-      <h2 className='profile__title'>Привет, Виталий!</h2>
-      <form className='profile__form' noValidate>
+      <h2 className='profile__title'>{currentUser.name}</h2>
+      <form className='profile__form' noValidate onSubmit={handleSubmitUpdateProfile}>
         <fieldset className='profile__fieldset'>
           <div className='profile__label-container'>
             <label className='profile__label'>
@@ -52,7 +58,7 @@ function Profile() {
                 type='text'
                 required
                 minLength='2'
-                maxLength='10'
+                maxLength='30'
                 pattern="^[A-Za-zА-Яа-яЁё\-\s]+$"
                 readOnly={!formIsEditing}
                 value={inputValues.name || ''}
@@ -85,24 +91,25 @@ function Profile() {
             </span>
           </div>
         </fieldset>
-        {
-          formIsEditing
-            ? <div className='profile__container'>
-              <p className={`profile__warning ${!isValidForm && 'profile__warning_enabled'}`}>
-              </p>
-              <button
-                className={`profile__button profile__button-save ${!isDisabled && 'profile__button-save_disabled'}`}
-                type='submit'
-                disabled={!isDisabled || !isValidForm}>
-                Сохранить
-              </button>
-            </div>
-            : <button
-              className='profile__button profile__button-edit'
-              type='button'
-              onClick={editProfileForm}>
-              Редактировать
+        {formIsEditing
+          ?
+          <div className='profile__container'>
+            <p className='profile__warning'>
+              {serverError}
+            </p>
+            <button
+              className={`profile__button profile__button-save ${!isValidForm || !isDisabled ? 'profile__button-save_disabled' : ''}`}
+              type='submit'
+              disabled={!isDisabled || !isValidForm}>
+              Сохранить
             </button>
+          </div>
+          : <button
+            className='profile__button profile__button-edit'
+            type='button'
+            onClick={editProfileForm}>
+            Редактировать
+          </button>
         }
         <button
           className='profile__button profile__button-exit'
