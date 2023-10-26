@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import './Header.css';
 
@@ -15,6 +15,11 @@ function Header({ isLoggedIn }) {
     document.body.classList.toggle('no-scroll');
     setburgerMenuIsOpen(!burgerMenuIsOpen);
   }
+
+  // Закрывать "бургер меню" при переходе на другой роут
+  useEffect(() => {
+    setburgerMenuIsOpen(false);
+  }, [pathname])
 
   if (
     pathname === '/' ||
