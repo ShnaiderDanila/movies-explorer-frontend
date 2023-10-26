@@ -112,24 +112,24 @@ class MainApi {
 
   /**
    * Метод сохранения фильма
-   * @param {string} data объект с информацией о фильме
+   * @param {string} movie объект с информацией о фильме
    * @return {function} возвращает результат работы this._request с переданными аргументами   
    */
-  saveMovie(data) {
+  saveMovie(movie) {
     return this._request(`movies`, {
       method: 'POST',
       body: JSON.stringify({
-        country: data.country,
-        director: data.director,
-        duration: data.duration,
-        year: data.year,
-        description: data.description,
-        image: data.image,
-        trailerLink: data.trailerLink,
-        thumbnail: data.thumbnail,
-        movieId: data.movieId,
-        nameRU: data.nameRU,
-        nameEN: data.nameEN,
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: movie.image,
+        trailerLink: movie.trailerLink,
+        thumbnail: movie.thumbnail,
+        movieId: movie.movieId,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
       }),
     })
   }

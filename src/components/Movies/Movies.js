@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+ 
 import './Movies.css';
 
 import { moviesApi } from '../../utils/MoviesApi';
-
 
 import SearchForm from './SearchForm/SearchForm';
 import Preloader from './Preloader/Preloader';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 
-function Movies() {
+function Movies({ handleSaveMovie, savedMovies }) {
 
   // Cтейт переменная для отображения Прелоадера
   const [isLoading, setIsLoading] = useState(false);
@@ -79,14 +79,16 @@ function Movies() {
         ? (<Preloader />)
         :
         (
-          <MoviesCardList isLoading={isLoading} filteredMovies={filteredMovies} moviesListError={moviesListError} />
+          <MoviesCardList
+            isLoading={isLoading}
+            filteredMovies={filteredMovies}
+            moviesListError={moviesListError}
+            handleSaveMovie={handleSaveMovie}
+            savedMovies={savedMovies} />
         )
       }
     </main>
   )
 };
-
-
-
 
 export default Movies;

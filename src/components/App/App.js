@@ -35,6 +35,9 @@ function App() {
   // Cтейт переменная ошибок сервера
   const [serverError, setServerError] = useState('');
 
+  // Стейт переменная сохраненных фильмов 
+  const [savedMovies, setSavedMovies] = useState(null);
+
   // Сброс ошибок сервера при переходе на другой роут
   const resetErrorMessage = useCallback(() => {
     setServerError('')
@@ -132,6 +135,43 @@ function App() {
   }
 
 
+  // Получение сохраненных фильмов пользователя
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi.getSavedMovies()
+        .then((movies) => {
+          setSavedMovies(movies)
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      // .catch((err) => setSearchError(err));
+    }
+  }, [isLoggedIn]);
+
+  // Обработчик сохранения фильма
+  function handleSaveMovie(movie) {
+    const isMovieSaved = savedMovies.some((item) => item.movieId === movie.movieId);
+    if (!isMovieSaved) {
+      mainApi.saveMovie(movie)
+        .then((savedMovie) => {
+          setSavedMovies([...savedMovies, savedMovie])
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+    } else {
+      const savedMovie = savedMovies.find((item) => item.movieId === movie.movieId);
+      mainApi
+        .deleteMovie(savedMovie._id)
+        .then(() => {
+          const newSavedMoviesArray = savedMovies.filter((item) => item.movieId !== movie.movieId)
+          setSavedMovies(newSavedMoviesArray);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <div className="wrapper">
       <CurrentUserContext.Provider value={currentUser}>
@@ -143,9 +183,14 @@ function App() {
             {
               <ProtectedRoute
                 element={Movies}
-                isLoggedIn={isLoggedIn} />
+                isLoggedIn={isLoggedIn}
+                handleSaveMovie={handleSaveMovie}
+                savedMovies={savedMovies} />
             } />
-          <Route path='/saved-movies' element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />} />
+          <Route path='/saved-movies' element=
+            {<ProtectedRoute
+              element={SavedMovies}
+              isLoggedIn={isLoggedIn} />} />
           <Route path='/profile' element=
             {<ProtectedRoute
               element={Profile}
