@@ -19,6 +19,7 @@ function Header({ isLoggedIn }) {
   // Закрывать "бургер меню" при переходе на другой роут
   useEffect(() => {
     setburgerMenuIsOpen(false);
+    document.body.classList.remove('no-scroll');
   }, [pathname])
 
   if (
