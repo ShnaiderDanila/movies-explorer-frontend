@@ -32,11 +32,16 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [infoTooltipTitle, setInfoTooltipTitle] = useState('');
 
-  // Cтейт переменная ошибок сервера
-  const [serverError, setServerError] = useState('');
-
   // Стейт переменная сохраненных фильмов 
-  const [savedMovies, setSavedMovies] = useState(null);
+  const [savedMovies, setSavedMovies] = useState([]);
+
+  // Cтейт переменная ошибок, отображения фильмов на роутах /movies
+  const [moviesError, setMoviesError] = useState('');
+
+  const [savedMoviesError, setSavedMoviesError] = useState('');
+
+  // Cтейт переменная ошибок сервера для роутов  /signin, /signup и /profile
+  const [serverError, setServerError] = useState('');
 
   // Сброс ошибок сервера при переходе на другой роут
   const resetErrorMessage = useCallback(() => {
@@ -47,7 +52,7 @@ function App() {
     resetErrorMessage()
   }, [resetErrorMessage, navigate]);
 
-  // Проверка авторизации пользователя и добавление информации о текущем пользователе в глобальный контекст
+  // Проверка авторизации пользователя и добавление информации о нем в глобальный контекст
   const checkUserAuthorization = useCallback(() => {
     mainApi.getUserInfo()
       .then((user) => {
@@ -63,9 +68,9 @@ function App() {
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Проверка авторизации пользователя
   useEffect(() => {
     checkUserAuthorization()
   }, [checkUserAuthorization])
@@ -83,7 +88,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        if (err.includes('401')) {
+        if (err.message.includes('Failed to fetch')) {
+          setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
+        } else if (err.includes('401')) {
           setServerError('Неправильные почта или пароль');
         } else if (err.includes('429'))
           setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
@@ -102,12 +109,13 @@ function App() {
         }
       })
       .catch((err) => {
-        if (err.includes('409')) {
+        if (err.message.includes('Failed to fetch')) {
+          setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
+        } else if (err.includes('409')) {
           setServerError('Пользователь с таким email уже зарегистрирован');
         } else if (err.includes('429')) {
           setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
-        }
-        else {
+        } else {
           setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
         }
       })
@@ -123,7 +131,9 @@ function App() {
         setCurrentUser({ email, name });
       })
       .catch((err) => {
-        if (err.includes('400')) {
+        if (err.message.includes('Failed to fetch')) {
+          setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
+        } else if (err.includes('400')) {
           setServerError('Введена некорректная электронная почта');
         } else if (err.includes('429')) {
           setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
@@ -134,43 +144,54 @@ function App() {
       })
   }
 
-
   // Получение сохраненных фильмов пользователя
   useEffect(() => {
     if (isLoggedIn) {
       mainApi.getSavedMovies()
         .then((movies) => {
-          setSavedMovies(movies)
+          setSavedMovies(movies.reverse())
         })
-        .catch((err) => {
-          console.log(err);
-        })
-      // .catch((err) => setSearchError(err));
+        .catch(() => {
+          setSavedMoviesError(
+            `Во время запроса произошла ошибка. 
+            Возможно, проблема с соединением или сервер недоступен. 
+            Подождите немного и попробуйте ещё раз`)
+        });
     }
   }, [isLoggedIn]);
 
-  // Обработчик сохранения фильма
-  function handleSaveMovie(movie) {
+  // Функция удаления фильма
+  function deleteMovie(movie) {
+    const savedMovie = savedMovies.find((item) => item.movieId === movie.movieId);
+    mainApi.deleteMovie(savedMovie._id)
+      .then(() => {
+        const newSavedMoviesArray = savedMovies.filter((item) => item.movieId !== movie.movieId)
+        setSavedMovies(newSavedMoviesArray);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // Функция сохранения фильма
+  function saveMovie(movie) {
+    mainApi.saveMovie(movie)
+      .then((savedMovie) => {
+        setSavedMovies([...savedMovies, savedMovie])
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  }
+
+  // Переключатель сохранения фильма для роута /movies
+  function toggleSaveMovie(movie) {
     const isMovieSaved = savedMovies.some((item) => item.movieId === movie.movieId);
     if (!isMovieSaved) {
-      mainApi.saveMovie(movie)
-        .then((savedMovie) => {
-          setSavedMovies([...savedMovies, savedMovie])
-        })
-        .catch((err) => {
-          console.log(err)
-        });
+      saveMovie(movie)
     } else {
-      const savedMovie = savedMovies.find((item) => item.movieId === movie.movieId);
-      mainApi
-        .deleteMovie(savedMovie._id)
-        .then(() => {
-          const newSavedMoviesArray = savedMovies.filter((item) => item.movieId !== movie.movieId)
-          setSavedMovies(newSavedMoviesArray);
-        })
-        .catch((err) => console.log(err));
+      deleteMovie(movie)
     }
   };
+
 
   return (
     <div className="wrapper">
@@ -180,17 +201,21 @@ function App() {
           <Route path='*' element={<NotFound />} />
           <Route path='/' element={<Main />} />
           <Route path='/movies' element=
-            {
-              <ProtectedRoute
-                element={Movies}
-                isLoggedIn={isLoggedIn}
-                handleSaveMovie={handleSaveMovie}
-                savedMovies={savedMovies} />
-            } />
+            {<ProtectedRoute
+              element={Movies}
+              isLoggedIn={isLoggedIn}
+              toggleSaveMovie={toggleSaveMovie}
+              savedMovies={savedMovies}
+              moviesError={moviesError}
+              setMoviesError={setMoviesError} />} />
           <Route path='/saved-movies' element=
             {<ProtectedRoute
               element={SavedMovies}
-              isLoggedIn={isLoggedIn} />} />
+              isLoggedIn={isLoggedIn}
+              savedMovies={savedMovies}
+              deleteMovie={deleteMovie}
+              savedMoviesError={savedMoviesError}
+              setSavedMoviesError={setSavedMoviesError} />} />
           <Route path='/profile' element=
             {<ProtectedRoute
               element={Profile}

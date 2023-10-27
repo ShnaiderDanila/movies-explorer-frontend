@@ -1,80 +1,81 @@
 import { useState } from 'react';
- 
-import './Movies.css';
-
 import { moviesApi } from '../../utils/MoviesApi';
 
+import './Movies.css';
+
+import filterMovies from '../../utils/FilterMovies';
+
 import SearchForm from './SearchForm/SearchForm';
-import Preloader from './Preloader/Preloader';
+import Preloader from '../Preloader/Preloader';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 
-function Movies({ handleSaveMovie, savedMovies }) {
+function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
+
+  // Для поисковой строки по роуту /movies
+  // Переменная состояния чекбокса "короткометражки"
+  const [isShort, setIsShort] = useState(false);
+  // Переменная состояния инпута поиска по ключевым словам
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Cтейт переменная для отображения Прелоадера
   const [isLoading, setIsLoading] = useState(false);
-
+  
+   // Cтейт переменная отфильтрованных фильмов
   const [filteredMovies, setFilteredMovies] = useState([]);
 
-  const [moviesListError, setMoviesListError] = useState('');
-
-  function filterKeyword(movie, keyword) {
-    return movie.nameRU.toLowerCase().includes(keyword.toLowerCase());
-  }
-
-  function filterShortfilm(movie) {
-    return movie.duration <= 40;
-  }
-
-  function filterMovies(inititalMovies, keyword, isShort) {
-    if (!inititalMovies) {
-      return [];
-    } else if (isShort) {
-      return inititalMovies
-        .filter((movie) => filterShortfilm(movie))
-        .filter((movie) => filterKeyword(movie, keyword));
-    } else {
-      return inititalMovies
-        .filter((movie) => filterKeyword(movie, keyword));
-    }
-  }
-
-  function handleFilterMovies(movies, keyword, isShort) {
+  // Обработчик фильтрации фильмов на роуте /movies
+  function handleFilterMovies(initialMovies, searchQuery, isShort) {
     // Сбрасываем ошибки в списке фильмов
-    setMoviesListError('')
-    const filteredMovies = filterMovies(movies, keyword, isShort)
+    setMoviesError('')
+    const filteredMovies = filterMovies(initialMovies, searchQuery, isShort)
     if (filteredMovies.length === 0) {
-      setMoviesListError('По вашему запросу ничего не найдено');
+      setMoviesError('По вашему запросу ничего не найдено');
+    } else {
+      setFilteredMovies(filteredMovies)
     }
-    setFilteredMovies(filteredMovies)
-    setIsLoading(false);
   }
 
-  // обработчик кнопки найти фильм
-  function handleGetMovies(keyword, isShort) {
+  // Обработчик поиска фильмов по роуту /movies
+  function handleSearchMovies(searchQuery, isShort) {
+    // Запускаем Preloader
     setIsLoading(true);
+    // Проверяем наличие фильмов с API beatFilms
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
-    // Проверяем если фильмы в localStorage
+    // Если нет фильмов в localStorage, запрашиваем их с API и потом запускаем фильтр
     if (!storedMovies) {
-      moviesApi
-        .getMovies()
+      moviesApi.getMovies()
         .then((inititalMovies) => {
-          // Устанавливаем найденные фильмы в localStorage
+          // Устанавливаем найденные фильмы beatFilms в localStorage
           localStorage.setItem('movies', JSON.stringify(inititalMovies));
-          // Запускаем фильтр фильмов
-          handleFilterMovies(inititalMovies, keyword, isShort)
+          // Запускаем фильтр
+          handleFilterMovies(inititalMovies, searchQuery, isShort)
         })
         .catch(() => {
-          setMoviesListError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+          setMoviesError(
+          `Во время запроса произошла ошибка. 
+          Возможно, проблема с соединением или сервер недоступен. 
+          Подождите немного и попробуйте ещё раз`)
         })
+        // Выключаем Preloader
+        .finally(() => {
+          setIsLoading(false)
+        })
+      // Если есть фильмы в localStorage, просто запускаем фильтр
     } else {
-      // Запускаем фильтр фильмов
-      handleFilterMovies(storedMovies, keyword, isShort)
+      handleFilterMovies(storedMovies, searchQuery, isShort)
+      setIsLoading(false);
     }
   }
 
   return (
     <main className='movies'>
-      <SearchForm onGetMovies={handleGetMovies} />
+      <SearchForm
+        handleSearchMovies={handleSearchMovies}
+        isShort={isShort}
+        setIsShort={setIsShort}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       {isLoading
         ? (<Preloader />)
         :
@@ -82,8 +83,8 @@ function Movies({ handleSaveMovie, savedMovies }) {
           <MoviesCardList
             isLoading={isLoading}
             filteredMovies={filteredMovies}
-            moviesListError={moviesListError}
-            handleSaveMovie={handleSaveMovie}
+            moviesError={moviesError}
+            toggleSaveMovie={toggleSaveMovie}
             savedMovies={savedMovies} />
         )
       }

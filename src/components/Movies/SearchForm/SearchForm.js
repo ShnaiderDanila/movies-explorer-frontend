@@ -4,68 +4,71 @@ import './SearchForm.css';
 
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ onGetMovies }) {
-
-  // Переменная состояния инпута поиска по ключевым словам
-  const [keyword, setKeyword] = useState('');
-  // Переменная состояния чекбокса "короткометражки"
-  const [isShort, setIsShort] = useState(false);
-  // Переменная состояния ошибки инпута 
-  const [errorInput, setErrorInput] = useState(false);
+function SearchForm({ handleSearchMovies, isShort, setIsShort, searchQuery, setSearchQuery }) {
 
   const { pathname } = useLocation();
 
-  function handleChangeKeyword(evt) {
-    setKeyword(evt.target.value)
-  }
+  // Переменная состояния ошибки пустого инпута (при поиске фильмов с пустым запросом)
+  const [errorInput, setErrorInput] = useState(false);
 
-  function handleChangeCheckbox() {
-    setIsShort(!isShort);
-    onGetMovies(keyword, !isShort);
-    if (pathname === '/movies') {
-      localStorage.setItem('isShort', !isShort);
-      localStorage.setItem('keyword', keyword);
-    }
-  }
-
-  // Обработка кнопки поиска фильмов
-  function handleSearchMovies(evt) {
-    evt.preventDefault();
-    if (!keyword) {
-      setErrorInput(true);
-      return;
-    }
-    setErrorInput(false);
-    if (pathname === '/movies') {
-      localStorage.setItem('keyword', keyword);
-    }
-    onGetMovies(keyword, isShort)
-  }
-
-  // Восстановление результатов предыдущего поиска на странице всех фильмов
+  // Восстанавливаем результаты предыдущего поиска на роуте /movies
   useEffect(() => {
     if (pathname === '/movies') {
-      const keyword = localStorage.getItem('keyword');
+      // Достаем все данные предущего поиска из localStorage
+      const searchQuery = localStorage.getItem('searchQuery');
       const isShort = JSON.parse(localStorage.getItem('isShort'));
-      keyword && setKeyword(keyword);
+      // Устанавливаем их в соответствующие поля формы
+      searchQuery && setSearchQuery(searchQuery);
       isShort && setIsShort(isShort);
-      if (keyword || isShort) {
-        onGetMovies(keyword, isShort);
+      // И производим поиск в соответствии с текущими полями
+      if (searchQuery || isShort) {
+        handleSearchMovies(searchQuery, isShort);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Функция для редактирования инпута SearchQuery 
+  function handleChangeSearchQuery(evt) {
+    setSearchQuery(evt.target.value)
+  }
+
+  // Функция для редактирования чекбокса "короткометражек" 
+  function handleChangeCheckbox() {
+    setErrorInput(false)
+    setIsShort(!isShort);
+    handleSearchMovies(searchQuery, !isShort);
+    if (pathname === '/movies') {
+      localStorage.setItem('isShort', !isShort);
+      localStorage.setItem('searchQuery', searchQuery);
+    } 
+  }
+
+  // Обработка кнопки поиска отфильтрованных фильмов
+  function handleSubmitSearchMovies(evt) {
+    evt.preventDefault();
+    // Если происходит поиск с пустым запросом, выдавать ошибку
+    if (!searchQuery) {
+      setErrorInput(true);
+      return;
+    } else {
+      setErrorInput(false);
+      handleSearchMovies(searchQuery, isShort)
+      pathname === '/movies' && localStorage.setItem('searchQuery', searchQuery);
+    }
+  }
 
   return (
     <section className='search-form'>
-      <form className='search-form__form' onSubmit={handleSearchMovies} noValidate>
+      <form className='search-form__form' onSubmit={handleSubmitSearchMovies} noValidate>
         <div className='search-form__box'>
           <input className='search-form__input'
-            id='keyword'
-            name='keyword'
+            id='searchQuery'
+            name='searchQuery'
             type='text'
             placeholder='Фильм'
-            value={keyword || ''}
-            onChange={handleChangeKeyword}
+            value={searchQuery || ''}
+            onChange={handleChangeSearchQuery}
             required
           />
           <button className='search-form__button' type='submit' />

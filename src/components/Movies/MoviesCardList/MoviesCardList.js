@@ -16,7 +16,7 @@ import {
 
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ filteredMovies, moviesListError, handleSaveMovie, savedMovies }) {
+function MoviesCardList({ filteredMovies, moviesError, savedMovies, deleteMovie, toggleSaveMovie }) {
 
   const [moviesLimit, setMoviesLimit] = useState(0);
   const [moviesLimitStep, setMoviesLimitStep] = useState(0);
@@ -49,29 +49,46 @@ function MoviesCardList({ filteredMovies, moviesListError, handleSaveMovie, save
 
   return (
     <section className='movies-card-list'>
-      {pathname === '/movies' &&
-        <>
-          {
-            moviesListError
-              ? <p className='movies-card-list__error'>{moviesListError}</p>
-              : <>
-                {
-                  filteredMovies.length !== 0 &&
-                  <>
-                    <ul className='movies-card-list__list'>
-                      {filteredMovies.map((movie, i) => {
-                        return (
-                          i < moviesLimit &&
-                          <MoviesCard key={movie.id} movie={movie} handleSaveMovie={handleSaveMovie} savedMovies={savedMovies} />
-                        )
-                      })}
-                    </ul>
-                    {filteredMovies.length > moviesLimit && (
-                      <button className='movies-card-list__button-more' type='button' onClick={showMoreMovies}>Ещё</button>
-                    )}
-                  </>
-                }
-              </>
+      {moviesError
+        ? <p className='movies-card-list__error'>{moviesError}</p>
+        : <>
+          {filteredMovies.length !== 0 &&
+            <>
+              <ul className='movies-card-list__list'>
+                {filteredMovies.map((movie, i) => {
+
+                  if (pathname === '/movies') {
+                    return (
+                      i < moviesLimit &&
+                      <MoviesCard
+                        key={movie.id || movie.movieId}
+                        movie={movie}
+                        toggleSaveMovie={toggleSaveMovie}
+                        savedMovies={savedMovies}
+                        deleteMovie={deleteMovie} />
+                    )
+                  }
+                  else {
+                    return (
+                      <MoviesCard
+                        key={movie.id || movie.movieId}
+                        movie={movie}
+                        toggleSaveMovie={toggleSaveMovie}
+                        savedMovies={savedMovies}
+                        deleteMovie={deleteMovie} />
+                    )
+                  }
+                })}
+              </ul>
+              {filteredMovies.length > moviesLimit && pathname === '/movies' && (
+                <button
+                  className='movies-card-list__button-more'
+                  type='button'
+                  onClick={showMoreMovies}>
+                  Ещё
+                </button>
+              )}
+            </>
           }
         </>
       }
