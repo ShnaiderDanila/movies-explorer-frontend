@@ -3,7 +3,7 @@ import './Profile.css';
 
 import useValidation from '../../hooks/useValidation';
 
-function Profile({ handleUpdateUserInfo, currentUser, serverError }) {
+function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
 
   const {
     inputValues,
@@ -42,6 +42,10 @@ function Profile({ handleUpdateUserInfo, currentUser, serverError }) {
     evt.preventDefault();
     handleUpdateUserInfo(inputValues.email, inputValues.name)
   }
+
+  function handleSignOut() {
+    signOut();
+  };
 
   return (
     <main className='profile'>
@@ -113,7 +117,8 @@ function Profile({ handleUpdateUserInfo, currentUser, serverError }) {
         }
         <button
           className='profile__button profile__button-exit'
-          type='button'>
+          type='button'
+          onClick={handleSignOut}>
           Выйти из аккаунта
         </button>
       </form>

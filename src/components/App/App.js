@@ -35,15 +35,16 @@ function App() {
   // Стейт переменная сохраненных фильмов 
   const [savedMovies, setSavedMovies] = useState([]);
 
-  // Cтейт переменная ошибок, отображения фильмов на роутах /movies
+  // Cтейт переменная ошибок, отображения фильмов на роуте /movies
   const [moviesError, setMoviesError] = useState('');
 
+  // Cтейт переменная ошибок, отображения фильмов на роуте /saved-movies
   const [savedMoviesError, setSavedMoviesError] = useState('');
 
   // Cтейт переменная ошибок сервера для роутов  /signin, /signup и /profile
   const [serverError, setServerError] = useState('');
 
-  // Сброс ошибок сервера при переходе на другой роут
+  // Сброс ошибок сервера для роутов /signin, /signup и /profile
   const resetErrorMessage = useCallback(() => {
     setServerError('')
   }, [])
@@ -56,20 +57,18 @@ function App() {
   const checkUserAuthorization = useCallback(() => {
     mainApi.getUserInfo()
       .then((user) => {
-        if (user) {
           setIsLoggedIn(true);
           setCurrentUser({
             email: user.email,
             name: user.name
           });
           navigate('/movies', { replace: true });
-        }
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isLoggedIn])
 
   useEffect(() => {
     checkUserAuthorization()
@@ -87,13 +86,16 @@ function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
-        if (err.message.includes('Failed to fetch')) {
+        if (err.message) {
+          err.message.includes('Failed to fetch') && 
           setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
-        } else if (err.includes('401')) {
-          setServerError('Неправильные почта или пароль');
-        } else if (err.includes('429'))
+        }
+        if (err.includes('401')) {
+          setServerError('Введен неправильный email или пароль');
+        }
+        else if (err.includes('429')) {
           setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
+        }
         else {
           setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
         }
@@ -109,13 +111,43 @@ function App() {
         }
       })
       .catch((err) => {
-        if (err.message.includes('Failed to fetch')) {
+        if (err.message) {
+          err.message.includes('Failed to fetch') && 
           setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
-        } else if (err.includes('409')) {
+        }
+        if (err.includes('400')) {
+          setServerError('Введен некорректный email или пароль');
+        }
+        else if (err.includes('409')) {
           setServerError('Пользователь с таким email уже зарегистрирован');
-        } else if (err.includes('429')) {
+        }
+        else if (err.includes('429')) {
           setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
-        } else {
+        }
+        else {
+          setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
+        }
+      })
+  }
+
+  function signOut() {
+    mainApi.signOut()
+      .then(() => {
+        localStorage.clear();
+        setIsLoggedIn(false);
+        setSavedMovies([])
+        setSavedMoviesError('');
+        setCurrentUser({
+          name: '',
+          email: '',
+        });
+      })
+      .catch((err) => {
+        if (err.message) {
+          err.message.includes('Failed to fetch') && 
+          setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
+        }
+        else {
           setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
         }
       })
@@ -131,11 +163,14 @@ function App() {
         setCurrentUser({ email, name });
       })
       .catch((err) => {
-        if (err.message.includes('Failed to fetch')) {
+        if (err.message) {
+          err.message.includes('Failed to fetch') && 
           setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
-        } else if (err.includes('400')) {
+        }
+        if (err.includes('400')) {
           setServerError('Введена некорректная электронная почта');
-        } else if (err.includes('429')) {
+        }
+        else if (err.includes('429')) {
           setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
         }
         else {
@@ -223,7 +258,8 @@ function App() {
               handleUpdateUserInfo={handleUpdateUserInfo}
               currentUser={currentUser}
               serverError={serverError}
-              setServerError={setServerError} />
+              setServerError={setServerError}
+              signOut={signOut} />
             } />
           <Route path='/signup' element=
             {<Register
