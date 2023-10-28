@@ -42,7 +42,7 @@ function Login({ handleSignIn, serverError }) {
                 type='email'
                 required
                 pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
-                value={inputValues.email}
+                value={inputValues.email || ''}
                 onChange={handleChangeValidation}>
               </input>
               <span
@@ -58,7 +58,7 @@ function Login({ handleSignIn, serverError }) {
                 type='password'
                 required
                 minLength='6'
-                value={inputValues.password}
+                value={inputValues.password || ''}
                 onChange={handleChangeValidation}>
               </input>
               <span
