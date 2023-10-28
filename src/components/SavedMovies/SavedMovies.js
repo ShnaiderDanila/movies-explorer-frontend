@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import './SavedMovies.css';
 
+import { SAVED_MOVIES_NOT_FOUND_ERR } from '../../constants/constants'; 
 import filterMovies from '../../utils/FilterMovies';
 
 import SearchForm from '../Movies/SearchForm/SearchForm';
@@ -35,7 +36,7 @@ function SavedMovies({ savedMovies, deleteMovie, savedMoviesError, setSavedMovie
     setSavedMoviesError('')
     const filteredMovies = filterMovies(savedMovies, searchQuery, isShort)
     if (filteredMovies.length === 0) {
-      setSavedMoviesError('Сохраненные фильмы не найдены');
+      setSavedMoviesError(SAVED_MOVIES_NOT_FOUND_ERR);
     } else {
       setFilteredMovies(filteredMovies)
     }

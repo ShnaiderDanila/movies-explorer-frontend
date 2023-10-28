@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 import './MoviesCard.css';
 
+import { BASE_URL_BEATFILM_API } from '../../../constants/constants';
+
 import convertDurationMovie from '../../../utils/convertDurationMovie';
 
 function MoviesCard({ movie, savedMovies, deleteMovie, toggleSaveMovie}) {
@@ -12,8 +14,8 @@ function MoviesCard({ movie, savedMovies, deleteMovie, toggleSaveMovie}) {
   function handleToggleSaveMovie() {
     toggleSaveMovie({
       ...movie,
-      image: `https://api.nomoreparties.co${movie.image.url}`,
-      thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
+      image: `${BASE_URL_BEATFILM_API}${movie.image.url}`,
+      thumbnail: `${BASE_URL_BEATFILM_API}${movie.image.formats.thumbnail.url}`,
       movieId: movie.id
     });
   };
@@ -29,7 +31,7 @@ function MoviesCard({ movie, savedMovies, deleteMovie, toggleSaveMovie}) {
     <li className='movies-card'>
       <a className='movies-card__image-link' href={movie.trailerLink} target="_blank" rel="noreferrer">
         <img className='movies-card__image'
-          src={pathname === '/movies' ? `https://api.nomoreparties.co${movie.image.url}` : movie.image}
+          src={pathname === '/movies' ? `${BASE_URL_BEATFILM_API}${movie.image.url}` : movie.image}
           alt={movie.nameRU}
         />
       </a>

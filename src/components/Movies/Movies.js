@@ -3,6 +3,8 @@ import { moviesApi } from '../../utils/MoviesApi';
 
 import './Movies.css';
 
+import { MOVIES_NOT_FOUND_ERR, DATA_PROCESSING_ERR } from '../../constants/constants';
+
 import filterMovies from '../../utils/FilterMovies';
 
 import SearchForm from './SearchForm/SearchForm';
@@ -29,7 +31,7 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
     setMoviesError('')
     const filteredMovies = filterMovies(initialMovies, searchQuery, isShort)
     if (filteredMovies.length === 0) {
-      setMoviesError('По вашему запросу ничего не найдено');
+      setMoviesError(MOVIES_NOT_FOUND_ERR);
     } else {
       setFilteredMovies(filteredMovies)
     }
@@ -51,10 +53,7 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
           handleFilterMovies(inititalMovies, searchQuery, isShort)
         })
         .catch(() => {
-          setMoviesError(
-          `Во время запроса произошла ошибка. 
-          Возможно, проблема с соединением или сервер недоступен. 
-          Подождите немного и попробуйте ещё раз`)
+          setMoviesError(DATA_PROCESSING_ERR)
         })
         // Выключаем Preloader
         .finally(() => {

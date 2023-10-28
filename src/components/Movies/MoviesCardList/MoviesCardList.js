@@ -12,7 +12,7 @@ import {
   MOVIES_LIMIT_STEP_4,
   MOVIES_LIMIT_STEP_3,
   MOVIES_LIMIT_STEP_2,
-} from '../../../utils/constants';
+} from '../../../constants/constants';
 
 import MoviesCard from '../MoviesCard/MoviesCard';
 

@@ -4,6 +4,23 @@ import { mainApi } from '../../utils/MainApi';
 
 import './App.css';
 
+import {
+  SERVER_ERR,
+  FAILED_TO_FETCH_ERR,
+  FAILED_TO_FETCH_ERR_MESSAGE,
+  BAD_REQUEST_ERR_CODE,
+  BAD_REQUEST_ERR_MESSAGE,
+  UNAUTHORIZED_ERR_CODE,
+  UNAUTHORIZED_ERR_MESSAGE,
+  CONFLICT_ERR_CODE,
+  CONFLICT_ERR_MESSAGE,
+  TOO_MANY_REQUESTS_ERR_CODE,
+  TOO_MANY_REQUESTS_ERR_MESSAGE,
+  DATA_PROCESSING_ERR,
+  SUCCESS_UPDATE_PROFILE,
+
+} from '../../constants/constants';
+
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import Header from '../Header/Header';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -57,12 +74,12 @@ function App() {
   const checkUserAuthorization = useCallback(() => {
     mainApi.getUserInfo()
       .then((user) => {
-          setIsLoggedIn(true);
-          setCurrentUser({
-            email: user.email,
-            name: user.name
-          });
-          navigate('/movies', { replace: true });
+        setIsLoggedIn(true);
+        setCurrentUser({
+          email: user.email,
+          name: user.name
+        });
+        navigate('/movies', { replace: true });
       })
       .catch((err) => {
         console.error(`Ошибка: ${err}`);
@@ -87,17 +104,17 @@ function App() {
       })
       .catch((err) => {
         if (err.message) {
-          err.message.includes('Failed to fetch') && 
-          setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
+          err.message.includes(FAILED_TO_FETCH_ERR) &&
+            setServerError(FAILED_TO_FETCH_ERR_MESSAGE);
         }
-        if (err.includes('401')) {
-          setServerError('Введен неправильный email или пароль');
+        if (err.includes(UNAUTHORIZED_ERR_CODE)) {
+          setServerError(UNAUTHORIZED_ERR_MESSAGE);
         }
-        else if (err.includes('429')) {
-          setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
+        else if (err.includes(TOO_MANY_REQUESTS_ERR_CODE)) {
+          setServerError(TOO_MANY_REQUESTS_ERR_MESSAGE);
         }
         else {
-          setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
+          setServerError(SERVER_ERR);
         }
       });
   }
@@ -112,20 +129,20 @@ function App() {
       })
       .catch((err) => {
         if (err.message) {
-          err.message.includes('Failed to fetch') && 
-          setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
+          err.message.includes(FAILED_TO_FETCH_ERR) &&
+            setServerError(FAILED_TO_FETCH_ERR_MESSAGE);
         }
-        if (err.includes('400')) {
-          setServerError('Введен некорректный email или пароль');
+        if (err.includes(BAD_REQUEST_ERR_CODE)) {
+          setServerError(BAD_REQUEST_ERR_MESSAGE);
         }
-        else if (err.includes('409')) {
-          setServerError('Пользователь с таким email уже зарегистрирован');
+        else if (err.includes(CONFLICT_ERR_CODE)) {
+          setServerError(CONFLICT_ERR_MESSAGE);
         }
-        else if (err.includes('429')) {
-          setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
+        else if (err.includes(TOO_MANY_REQUESTS_ERR_CODE)) {
+          setServerError(TOO_MANY_REQUESTS_ERR_MESSAGE);
         }
         else {
-          setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
+          setServerError(SERVER_ERR);
         }
       })
   }
@@ -144,11 +161,11 @@ function App() {
       })
       .catch((err) => {
         if (err.message) {
-          err.message.includes('Failed to fetch') && 
-          setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
+          err.message.includes(FAILED_TO_FETCH_ERR) &&
+            setServerError(FAILED_TO_FETCH_ERR_MESSAGE);
         }
         else {
-          setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
+          setServerError(SERVER_ERR);
         }
       })
   }
@@ -158,23 +175,23 @@ function App() {
     mainApi.updateUserInfo(email, name)
       .then(() => {
         setServerError('');
-        setInfoTooltipTitle('Редактирование выполнено успешно!')
+        setInfoTooltipTitle(SUCCESS_UPDATE_PROFILE)
         setIsInfoTooltipOpen(true)
         setCurrentUser({ email, name });
       })
       .catch((err) => {
         if (err.message) {
-          err.message.includes('Failed to fetch') && 
-          setServerError('Ошибка сервера! Пожалуйста повторите попытку позже.');
+          err.message.includes(FAILED_TO_FETCH_ERR) &&
+            setServerError(FAILED_TO_FETCH_ERR_MESSAGE);
         }
-        if (err.includes('400')) {
-          setServerError('Введена некорректная электронная почта');
+        if (err.includes(BAD_REQUEST_ERR_CODE)) {
+          setServerError(BAD_REQUEST_ERR_MESSAGE);
         }
-        else if (err.includes('429')) {
-          setServerError('Слишком много запросов, пожалуйста повторите попытку позже.');
+        else if (err.includes(TOO_MANY_REQUESTS_ERR_CODE)) {
+          setServerError(TOO_MANY_REQUESTS_ERR_MESSAGE);
         }
         else {
-          setServerError('Что-то пошло не так! Пожалуйста повторите попытку позже.');
+          setServerError(SERVER_ERR);
         }
       })
   }
@@ -187,10 +204,7 @@ function App() {
           setSavedMovies(movies.reverse())
         })
         .catch(() => {
-          setSavedMoviesError(
-            `Во время запроса произошла ошибка. 
-            Возможно, проблема с соединением или сервер недоступен. 
-            Подождите немного и попробуйте ещё раз`)
+          setSavedMoviesError(DATA_PROCESSING_ERR)
         });
     }
   }, [isLoggedIn]);
