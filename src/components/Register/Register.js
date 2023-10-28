@@ -16,10 +16,12 @@ function Register({ handleSignUp, serverError }) {
     resetValidation
   } = useValidation();
 
+  // Сброс валидации
   useEffect(() => {
     resetValidation();
   }, [resetValidation]);
 
+  // Обработчик самбита регистрации
   function handleRegisterSubmit(evt) {
     evt.preventDefault();
     handleSignUp(inputValues.email, inputValues.password, inputValues.name);

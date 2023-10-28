@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import useValidation from '../../hooks/useValidation';
 
 import './Login.css';
@@ -16,10 +17,12 @@ function Login({ handleSignIn, serverError }) {
     resetValidation
   } = useValidation();
 
+  // Очистка валидации
   useEffect(() => {
     resetValidation();
   }, [resetValidation]);
   
+  // Обработчик кнопки "войти"
   function handleLoginSubmit(evt) {
     evt.preventDefault();
     handleSignIn(inputValues.email, inputValues.password);

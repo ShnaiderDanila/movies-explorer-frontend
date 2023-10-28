@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { moviesApi } from '../../utils/MoviesApi';
 
 import './Movies.css';
 
 import { MOVIES_NOT_FOUND_ERR, DATA_PROCESSING_ERR } from '../../constants/constants';
 
+import { moviesApi } from '../../utils/MoviesApi';
 import filterMovies from '../../utils/FilterMovies';
 
 import SearchForm from './SearchForm/SearchForm';
@@ -21,8 +21,8 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
 
   // Cтейт переменная для отображения Прелоадера
   const [isLoading, setIsLoading] = useState(false);
-  
-   // Cтейт переменная отфильтрованных фильмов
+
+  // Cтейт переменная отфильтрованных фильмов
   const [filteredMovies, setFilteredMovies] = useState([]);
 
   // Обработчик фильтрации фильмов на роуте /movies
@@ -47,13 +47,12 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
     if (!storedMovies) {
       moviesApi.getMovies()
         .then((inititalMovies) => {
-          // Устанавливаем найденные фильмы beatFilms в localStorage
           localStorage.setItem('movies', JSON.stringify(inititalMovies));
-          // Запускаем фильтр
           handleFilterMovies(inititalMovies, searchQuery, isShort)
         })
-        .catch(() => {
-          setMoviesError(DATA_PROCESSING_ERR)
+        .catch((err) => {
+          console.error(`Ошибка: ${err}`);
+          setMoviesError(DATA_PROCESSING_ERR);
         })
         // Выключаем Preloader
         .finally(() => {
@@ -77,8 +76,7 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
       />
       {isLoading
         ? (<Preloader />)
-        :
-        (
+        : (
           <MoviesCardList
             isLoading={isLoading}
             filteredMovies={filteredMovies}

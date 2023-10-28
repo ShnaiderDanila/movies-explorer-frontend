@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import './Profile.css';
-
 import useValidation from '../../hooks/useValidation';
+
+import './Profile.css';
 
 function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
 
@@ -13,10 +13,13 @@ function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
     resetValidation
   } = useValidation();
 
+  // Стейт-переменная состояния редактирования профиля
   const [formIsEditing, setFormIsEditing] = useState(false);
 
+  // Стейт-переменная состояния блокирования кнопки, при однотипности введенных данных
   const [isDisabled, setIsDisabled] = useState(false);
 
+  // Сброс валидации и состояния редактирования профиля
   useEffect(() => {
     resetValidation({ email: currentUser.email, name: currentUser.name });
     setFormIsEditing(false);
@@ -31,18 +34,18 @@ function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
     }
   }, [inputValues, isValidForm, currentUser]);
 
-
   // Функция для разрешения редактирования формы
   function editProfileForm() {
     setFormIsEditing(true);
   };
 
-  // Функция самбита обновления профиля пользователя
+  // Обработчик самбита обновления профиля пользователя
   function handleSubmitUpdateProfile(evt) {
     evt.preventDefault();
     handleUpdateUserInfo(inputValues.email, inputValues.name)
   }
 
+  // Обработчик кнопки "Выйти из аккаунта"
   function handleSignOut() {
     signOut();
   };

@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
+
 import './Navigation.css';
 
 function Navigation({ isLoggedIn, burgerMenuIsOpen }) {
@@ -42,7 +43,7 @@ function Navigation({ isLoggedIn, burgerMenuIsOpen }) {
         <Link to='/signin' className="auth-navigation__button">Войти</Link>
       </nav>
     )
-  }
-}
+  };
+};
 
 export default Navigation;

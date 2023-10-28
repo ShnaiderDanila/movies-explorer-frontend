@@ -1,3 +1,4 @@
+// Функция для конвертирования продолжительности фильма
 function convertDurationMovie(duration) {
   const minutes = duration % 60;
   const hours = Math.floor(duration / 60);

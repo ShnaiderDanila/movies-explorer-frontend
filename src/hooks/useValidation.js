@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+// Кастомный хук для валидации полей формы
 function useValidation () {
   // Стейт-переменная значения инпута
   const [inputValues, setInputValues] = useState({});

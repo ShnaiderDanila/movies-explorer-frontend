@@ -25,7 +25,9 @@ function SavedMovies({ savedMovies, deleteMovie, savedMoviesError, setSavedMovie
 
   // Отрисовываем сохраненные фильмы в самом начале монтирования компонента и при измении массива savedMovies
   useEffect(() => {
+    setIsLoading(true);
     handleSearchSavedMovies(searchQuery, isShort)
+    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [savedMovies])
 
@@ -42,7 +44,7 @@ function SavedMovies({ savedMovies, deleteMovie, savedMoviesError, setSavedMovie
     }
     setIsLoading(false);
   }
-
+  
   return (
     <main className='saved-movies'>
       <SearchForm

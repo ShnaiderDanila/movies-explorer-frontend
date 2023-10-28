@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { mainApi } from '../../utils/MainApi';
 
 import './App.css';
 
@@ -21,6 +20,8 @@ import {
 
 } from '../../constants/constants';
 
+import { mainApi } from '../../utils/MainApi';
+
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import Header from '../Header/Header';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -33,7 +34,6 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import NotFound from '../NotFound/NotFound';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
-
 
 function App() {
 
@@ -71,7 +71,7 @@ function App() {
   }, [resetErrorMessage, navigate]);
 
   // Проверка авторизации пользователя и добавление информации о нем в глобальный контекст
-  const checkUserAuthorization = useCallback(() => {
+  useEffect(() => {
     mainApi.getUserInfo()
       .then((user) => {
         setIsLoggedIn(true);
@@ -79,17 +79,11 @@ function App() {
           email: user.email,
           name: user.name
         });
-        navigate('/movies', { replace: true });
       })
-      .catch((err) => {
-        console.error(`Ошибка: ${err}`);
+      .catch(() => {
+        setIsLoggedIn(false);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn])
-
-  useEffect(() => {
-    checkUserAuthorization()
-  }, [checkUserAuthorization])
 
   // Обработка авторизации пользователя
   function handleSignIn(email, password) {
@@ -117,7 +111,7 @@ function App() {
           setServerError(SERVER_ERR);
         }
       });
-  }
+  };
 
   // Обработка регистрации пользователя
   function handleSignUp(email, password, name) {
@@ -144,9 +138,10 @@ function App() {
         else {
           setServerError(SERVER_ERR);
         }
-      })
-  }
+      });
+  };
 
+  // Обработка выхода из аккаунта
   function signOut() {
     mainApi.signOut()
       .then(() => {
@@ -167,8 +162,8 @@ function App() {
         else {
           setServerError(SERVER_ERR);
         }
-      })
-  }
+      });
+  };
 
   // Обработка обновления данных пользователя
   function handleUpdateUserInfo(email, name) {
@@ -193,21 +188,34 @@ function App() {
         else {
           setServerError(SERVER_ERR);
         }
-      })
-  }
+      });
+  };
 
-  // Получение сохраненных фильмов пользователя
+  // Получение сохраненных фильмов пользователя при входе в аккаунт
   useEffect(() => {
     if (isLoggedIn) {
       mainApi.getSavedMovies()
         .then((movies) => {
           setSavedMovies(movies.reverse())
+          setSavedMoviesError('');
         })
-        .catch(() => {
-          setSavedMoviesError(DATA_PROCESSING_ERR)
+        .catch((err) => {
+          setSavedMoviesError(DATA_PROCESSING_ERR);
+          console.error(`Ошибка: ${err}`);
         });
-    }
+    };
   }, [isLoggedIn]);
+
+  // Функция сохранения фильма
+  function saveMovie(movie) {
+    mainApi.saveMovie(movie)
+      .then((savedMovie) => {
+        setSavedMovies([...savedMovies, savedMovie])
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      });
+  };
 
   // Функция удаления фильма
   function deleteMovie(movie) {
@@ -217,19 +225,10 @@ function App() {
         const newSavedMoviesArray = savedMovies.filter((item) => item.movieId !== movie.movieId)
         setSavedMovies(newSavedMoviesArray);
       })
-      .catch((err) => console.log(err));
-  }
-
-  // Функция сохранения фильма
-  function saveMovie(movie) {
-    mainApi.saveMovie(movie)
-      .then((savedMovie) => {
-        setSavedMovies([...savedMovies, savedMovie])
-      })
       .catch((err) => {
-        console.log(err)
+        console.error(`Ошибка: ${err}`);
       });
-  }
+  };
 
   // Переключатель сохранения фильма для роута /movies
   function toggleSaveMovie(movie) {
@@ -240,7 +239,6 @@ function App() {
       deleteMovie(movie)
     }
   };
-
 
   return (
     <div className="wrapper">

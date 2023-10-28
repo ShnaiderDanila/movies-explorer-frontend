@@ -2,7 +2,6 @@ import { React } from 'react';
 
 import './InfoTooltip.css';
 
-// Импортируем иконки
 import iconSuccess from '../../images/icon-success.svg';
 
 function InfoTooltip({ setIsInfoTooltipOpen, isInfoTooltipOpen, infoTooltipTitle }) {

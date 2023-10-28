@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import useWindowResize from '../../../hooks/useWindowResize';
 
 import './MoviesCardList.css';
@@ -16,9 +17,12 @@ import {
 
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ filteredMovies, moviesError, savedMovies, deleteMovie, toggleSaveMovie }) {
+function MoviesCardList({ filteredMovies, moviesError, savedMovies, toggleSaveMovie, deleteMovie }) {
 
+  // Лимит отображения фильмов
   const [moviesLimit, setMoviesLimit] = useState(0);
+
+  // Лимиты отображения карточек фильмов, при нажатии кнопки "Еще"
   const [moviesLimitStep, setMoviesLimitStep] = useState(0);
 
   const { pathname } = useLocation();
@@ -26,6 +30,7 @@ function MoviesCardList({ filteredMovies, moviesError, savedMovies, deleteMovie,
   // // Переменная для отслеживания ширины окна
   const { width } = useWindowResize();
 
+  // Устанавливаем лимиты в зависимости от ширины окна
   useEffect(() => {
     if (width >= 1200) {
       setMoviesLimit(MOVIES_LIMIT_16);
@@ -43,6 +48,7 @@ function MoviesCardList({ filteredMovies, moviesError, savedMovies, deleteMovie,
     }
   }, [width])
 
+  // Обработчик кнопки "Еще"
   function showMoreMovies() {
     setMoviesLimit(moviesLimit + moviesLimitStep);
   }
@@ -56,7 +62,7 @@ function MoviesCardList({ filteredMovies, moviesError, savedMovies, deleteMovie,
             <>
               <ul className='movies-card-list__list'>
                 {filteredMovies.map((movie, i) => {
-
+                  // Разделяем дальнейшую разметку по роуту, так как условие i < moviesLimit не нужно в /saved-movies
                   if (pathname === '/movies') {
                     return (
                       i < moviesLimit &&
@@ -80,7 +86,8 @@ function MoviesCardList({ filteredMovies, moviesError, savedMovies, deleteMovie,
                   }
                 })}
               </ul>
-              {filteredMovies.length > moviesLimit && pathname === '/movies' && (
+              { // Показываем кнопку "Ещё" только на роуте /movies
+              filteredMovies.length > moviesLimit && pathname === '/movies' && (
                 <button
                   className='movies-card-list__button-more'
                   type='button'

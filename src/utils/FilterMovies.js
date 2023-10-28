@@ -1,11 +1,14 @@
+// Функция фильтрации по ключевым словам
 function filterKeyword(movie, searchQuery) {
   return movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
 }
 
+// Функция фильтрации "короткометражек"
 function filterShortfilm(movie) {
   return movie.duration <= 40;
 }
 
+// Функция фильтрации фильмов
 function filterMovies(inititalMovies, searchQuery, isShort) {
   if (!inititalMovies) {
     return [];
