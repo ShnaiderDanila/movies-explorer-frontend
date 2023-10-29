@@ -21,9 +21,6 @@ const SUCCESS_UPDATE_PROFILE = 'Редактирование выполнено 
 const MOVIES_NOT_FOUND_ERR = 'По вашему запросу ничего не найдено';
 const SAVED_MOVIES_NOT_FOUND_ERR = 'Сохраненные фильмы не найдены';
 
-// Переменная базового URL BEATFILM API
-const BASE_URL_BEATFILM_API = 'https://api.nomoreparties.co';
-
 // Лимиты отображения карточек фильмов
 const MOVIES_LIMIT_16 = 16;
 const MOVIES_LIMIT_12 = 12;
@@ -34,6 +31,12 @@ const MOVIES_LIMIT_5 = 5;
 const MOVIES_LIMIT_STEP_4 = 4;
 const MOVIES_LIMIT_STEP_3 = 3;
 const MOVIES_LIMIT_STEP_2 = 2;
+
+// Переменная базового URL BEATFILM API
+const BASE_URL_BEATFILM_API = 'https://api.nomoreparties.co';
+
+// Максимальная длина короткометражного фильма
+const MAX_DURATION_SHORT_MOVIE = 40; 
 
 export {
   SERVER_ERR,
@@ -59,4 +62,5 @@ export {
   MOVIES_LIMIT_STEP_3,
   MOVIES_LIMIT_STEP_2,
   BASE_URL_BEATFILM_API,
+  MAX_DURATION_SHORT_MOVIE,
 };
