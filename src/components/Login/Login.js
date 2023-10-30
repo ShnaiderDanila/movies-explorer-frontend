@@ -7,7 +7,7 @@ import './Login.css';
 
 import Logo from '../Logo/Logo';
 
-function Login({ handleSignIn, serverError }) {
+function Login({ handleSignIn, serverError, isInputsDisabled }) {
 
   const {
     inputValues,
@@ -21,7 +21,7 @@ function Login({ handleSignIn, serverError }) {
   useEffect(() => {
     resetValidation();
   }, [resetValidation]);
-  
+
   // Обработчик кнопки "войти"
   function handleLoginSubmit(evt) {
     evt.preventDefault();
@@ -45,6 +45,7 @@ function Login({ handleSignIn, serverError }) {
                 type='email'
                 required
                 pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
+                disabled={isInputsDisabled}
                 value={inputValues.email || ''}
                 onChange={handleChangeValidation}>
               </input>
@@ -61,6 +62,7 @@ function Login({ handleSignIn, serverError }) {
                 type='password'
                 required
                 minLength='6'
+                disabled={isInputsDisabled}
                 value={inputValues.password || ''}
                 onChange={handleChangeValidation}>
               </input>
@@ -73,15 +75,19 @@ function Login({ handleSignIn, serverError }) {
           <div className='login__button-container'>
             <p className='login__error'>{serverError}</p>
             <button
-              className={`login__signin-button ${!isValidForm && 'login__signin-button_disabled'}`}
+              className={`login__signin-button`}
               type='submit'
-              disabled={!isValidForm}>
+              disabled={!isValidForm || isInputsDisabled}>
               Войти
             </button>
           </div>
           <div className='login__signup'>
             <span className='login__signup-signature'>Ещё не зарегистрированы?</span>
-            <Link to='/signup' className="login__signup-button">Регистрация</Link>
+            <Link
+              to='/signup'
+              className={`login__signup-button ${isInputsDisabled && 'login__signup-button_disabled'}`}>
+              Регистрация
+            </Link>
           </div>
         </form>
       </div>
@@ -91,4 +97,3 @@ function Login({ handleSignIn, serverError }) {
 
 export default Login;
 
- 

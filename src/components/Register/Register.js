@@ -6,8 +6,8 @@ import './Register.css';
 
 import Logo from '../Logo/Logo';
 
-function Register({ handleSignUp, serverError }) {
- 
+function Register({ handleSignUp, serverError, isInputsDisabled }) {
+
   const {
     inputValues,
     errorMessages,
@@ -46,6 +46,7 @@ function Register({ handleSignUp, serverError }) {
                 minLength='2'
                 maxLength='30'
                 pattern="^[A-Za-zА-Яа-яЁё\-\s]+$"
+                disabled={isInputsDisabled}
                 value={inputValues.name || ''}
                 onChange={handleChangeValidation}>
               </input>
@@ -61,6 +62,7 @@ function Register({ handleSignUp, serverError }) {
                 type='email'
                 required
                 pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
+                disabled={isInputsDisabled}
                 value={inputValues.email || ''}
                 onChange={handleChangeValidation}>
               </input>
@@ -76,6 +78,7 @@ function Register({ handleSignUp, serverError }) {
                 type='password'
                 required
                 minLength='6'
+                disabled={isInputsDisabled}
                 value={inputValues.password || ''}
                 onChange={handleChangeValidation}>
               </input>
@@ -87,15 +90,19 @@ function Register({ handleSignUp, serverError }) {
           <div className='register__button-container'>
             <p className='register__error'>{serverError}</p>
             <button
-              className={`register__signup-button ${!isValidForm && 'register__signup-button_disabled'}`}
+              className={`register__signup-button`}
               type='submit'
-              disabled={!isValidForm}>
+              disabled={!isValidForm || isInputsDisabled}>
               Зарегистрироваться
             </button>
           </div>
           <div className='register__signin'>
             <span className='register__signin-signature'>Уже зарегистрированы?</span>
-            <Link to='/signin' className="register__signin-button">Войти</Link>
+            <Link
+              to='/signin'
+              className={`register__signin-button ${isInputsDisabled && 'register__signin-button_disabled'}`}>
+              Войти
+            </Link>
           </div>
         </form>
       </div>

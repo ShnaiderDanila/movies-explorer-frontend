@@ -52,6 +52,10 @@
   line-height: 16.94px;
 }
 
+.register__input:disabled {
+  color: #a0a0a0;
+}
+
 .register__input:focus {
   border-bottom: 1px solid #3456f3;
 }
@@ -96,7 +100,7 @@
   transition: opacity 0.3s ease;
 }
 
-.register__signup-button_disabled {
+.register__signup-button:disabled {
   background-color: #f8f8f8;
   color: #c2c2c2;
 }
@@ -119,6 +123,10 @@
   color: #3456f3;
   text-decoration: none;
   transition: opacity 0.3s ease;
+}
+
+.register__signin-button_disabled {
+  pointer-events: none;
 }
 
 /* Адаптив  */

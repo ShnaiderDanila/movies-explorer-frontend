@@ -3,7 +3,7 @@ import useValidation from '../../hooks/useValidation';
 
 import './Profile.css';
 
-function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
+function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut, isInputsDisabled }) {
 
   const {
     inputValues,
@@ -68,6 +68,7 @@ function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
                 maxLength='30'
                 pattern="^[A-Za-zА-Яа-яЁё\-\s]+$"
                 readOnly={!formIsEditing}
+                disabled={isInputsDisabled}
                 value={inputValues.name || ''}
                 onChange={handleChangeValidation}>
               </input>
@@ -88,6 +89,7 @@ function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
                 required
                 pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
                 readOnly={!formIsEditing}
+                disabled={isInputsDisabled}
                 value={inputValues.email || ''}
                 onChange={handleChangeValidation}>
               </input>
@@ -105,23 +107,26 @@ function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
               {serverError}
             </p>
             <button
-              className={`profile__button profile__button-save ${!isValidForm || !isDisabled ? 'profile__button-save_disabled' : ''}`}
+              className={`profile__button profile__button-save 
+              ${!isValidForm || !isDisabled || isInputsDisabled ? 'profile__button-save_disabled' : ''}`}
               type='submit'
-              disabled={!isDisabled || !isValidForm}>
+              disabled={!isDisabled || !isValidForm || isInputsDisabled}>
               Сохранить
             </button>
           </div>
           : <button
             className='profile__button profile__button-edit'
             type='button'
-            onClick={editProfileForm}>
+            onClick={editProfileForm}
+            disabled={isInputsDisabled}>
             Редактировать
           </button>
         }
         <button
           className='profile__button profile__button-exit'
           type='button'
-          onClick={handleSignOut}>
+          onClick={handleSignOut}
+          disabled={isInputsDisabled}>
           Выйти из аккаунта
         </button>
       </form>

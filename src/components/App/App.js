@@ -61,6 +61,9 @@ function App() {
   // Cтейт переменная ошибок сервера для роутов  /signin, /signup и /profile
   const [serverError, setServerError] = useState('');
 
+  // Стейт переменная блокировки инпутов формы во время отправки запроса
+  const [isInputsDisabled, setIsInputsDisabled] = useState(false)
+
   // Сброс ошибок сервера для роутов /signin, /signup и /profile
   const resetErrorMessage = useCallback(() => {
     setServerError('')
@@ -87,9 +90,11 @@ function App() {
 
   // Обработка авторизации пользователя
   function handleSignIn(email, password) {
+    setIsInputsDisabled(true);
     mainApi.signin(email, password)
       .then((res) => {
         if (res) {
+          setIsInputsDisabled(false);
           setIsLoggedIn(true)
           setInfoTooltipTitle(res.message)
           setIsInfoTooltipOpen(true)
@@ -97,6 +102,7 @@ function App() {
         }
       })
       .catch((err) => {
+        setIsInputsDisabled(false);
         if (err.message) {
           err.message.includes(FAILED_TO_FETCH_ERR) &&
             setServerError(FAILED_TO_FETCH_ERR_MESSAGE);
@@ -115,13 +121,16 @@ function App() {
 
   // Обработка регистрации пользователя
   function handleSignUp(email, password, name) {
+    setIsInputsDisabled(true);
     mainApi.signup(email, password, name)
       .then((res) => {
         if (res) {
+          setIsInputsDisabled(false);
           handleSignIn(email, password);
         }
       })
       .catch((err) => {
+        setIsInputsDisabled(false);
         if (err.message) {
           err.message.includes(FAILED_TO_FETCH_ERR) &&
             setServerError(FAILED_TO_FETCH_ERR_MESSAGE);
@@ -143,8 +152,10 @@ function App() {
 
   // Обработка выхода из аккаунта
   function signOut() {
+    setIsInputsDisabled(true);
     mainApi.signOut()
       .then(() => {
+        setIsInputsDisabled(false);
         localStorage.clear();
         setIsLoggedIn(false);
         setSavedMovies([])
@@ -155,6 +166,7 @@ function App() {
         });
       })
       .catch((err) => {
+        setIsInputsDisabled(false);
         if (err.message) {
           err.message.includes(FAILED_TO_FETCH_ERR) &&
             setServerError(FAILED_TO_FETCH_ERR_MESSAGE);
@@ -167,14 +179,17 @@ function App() {
 
   // Обработка обновления данных пользователя
   function handleUpdateUserInfo(email, name) {
+    setIsInputsDisabled(true);
     mainApi.updateUserInfo(email, name)
       .then(() => {
+        setIsInputsDisabled(false);
         setServerError('');
         setInfoTooltipTitle(SUCCESS_UPDATE_PROFILE)
         setIsInfoTooltipOpen(true)
         setCurrentUser({ email, name });
       })
       .catch((err) => {
+        setIsInputsDisabled(false);
         if (err.message) {
           err.message.includes(FAILED_TO_FETCH_ERR) &&
             setServerError(FAILED_TO_FETCH_ERR_MESSAGE);
@@ -273,17 +288,18 @@ function App() {
               currentUser={currentUser}
               serverError={serverError}
               setServerError={setServerError}
-              signOut={signOut} />
+              signOut={signOut}
+              isInputsDisabled={isInputsDisabled} />
             } />
           {isLoggedIn
             ? <Route path='/signup' element={<Navigate to="/" />} />
             : <Route path='/signup' element=
-              {<Register handleSignUp={handleSignUp} serverError={serverError} />} />
+              {<Register handleSignUp={handleSignUp} serverError={serverError} isInputsDisabled={isInputsDisabled} />} />
           }
           {isLoggedIn
             ? <Route path='/signin' element={<Navigate to="/" />} />
             : <Route path='/signin' element=
-              {<Login handleSignIn={handleSignIn} serverError={serverError} />} />
+              {<Login handleSignIn={handleSignIn} serverError={serverError} isInputsDisabled={isInputsDisabled} />} />
           }
         </Routes>
         <Footer />
