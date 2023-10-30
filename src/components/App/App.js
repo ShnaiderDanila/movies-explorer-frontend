@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 
 import './App.css';
 
@@ -15,7 +15,7 @@ import {
   CONFLICT_ERR_MESSAGE,
   TOO_MANY_REQUESTS_ERR_CODE,
   TOO_MANY_REQUESTS_ERR_MESSAGE,
-  DATA_PROCESSING_ERR,
+  SAVED_MOVIES_NOT_FOUND_ERR,
   SUCCESS_UPDATE_PROFILE,
 
 } from '../../constants/constants';
@@ -40,7 +40,7 @@ function App() {
   const navigate = useNavigate();
 
   // Cтейт переменная авторизованного пользователя
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') || false);
 
   // Глобальная стейт переменная текущего пользователя
   const [currentUser, setCurrentUser] = useState({});
@@ -74,14 +74,14 @@ function App() {
   useEffect(() => {
     mainApi.getUserInfo()
       .then((user) => {
-        setIsLoggedIn(true);
+        localStorage.setItem('isLoggedIn', true);
         setCurrentUser({
           email: user.email,
           name: user.name
         });
       })
-      .catch(() => {
-        setIsLoggedIn(false);
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
       });
   }, [isLoggedIn])
 
@@ -200,7 +200,7 @@ function App() {
           setSavedMoviesError('');
         })
         .catch((err) => {
-          setSavedMoviesError(DATA_PROCESSING_ERR);
+          setSavedMoviesError(SAVED_MOVIES_NOT_FOUND_ERR);
           console.error(`Ошибка: ${err}`);
         });
     };
@@ -254,7 +254,8 @@ function App() {
               toggleSaveMovie={toggleSaveMovie}
               savedMovies={savedMovies}
               moviesError={moviesError}
-              setMoviesError={setMoviesError} />} />
+              setMoviesError={setMoviesError} />
+            } />
           <Route path='/saved-movies' element=
             {<ProtectedRoute
               element={SavedMovies}
@@ -262,7 +263,8 @@ function App() {
               savedMovies={savedMovies}
               deleteMovie={deleteMovie}
               savedMoviesError={savedMoviesError}
-              setSavedMoviesError={setSavedMoviesError} />} />
+              setSavedMoviesError={setSavedMoviesError} />
+            } />
           <Route path='/profile' element=
             {<ProtectedRoute
               element={Profile}
@@ -273,16 +275,16 @@ function App() {
               setServerError={setServerError}
               signOut={signOut} />
             } />
-          <Route path='/signup' element=
-            {<Register
-              handleSignUp={handleSignUp}
-              serverError={serverError} />
-            } />
-          <Route path='/signin' element=
-            {<Login
-              handleSignIn={handleSignIn}
-              serverError={serverError} />
-            } />
+          {isLoggedIn
+            ? <Route path='/signup' element={<Navigate to="/" />} />
+            : <Route path='/signup' element=
+              {<Register handleSignUp={handleSignUp} serverError={serverError} />} />
+          }
+          {isLoggedIn
+            ? <Route path='/signin' element={<Navigate to="/" />} />
+            : <Route path='/signin' element=
+              {<Login handleSignIn={handleSignIn} serverError={serverError} />} />
+          }
         </Routes>
         <Footer />
         <InfoTooltip
