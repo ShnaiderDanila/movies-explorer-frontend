@@ -52,7 +52,7 @@ function Profile({ handleUpdateUserInfo, currentUser, serverError, signOut }) {
 
   return (
     <main className='profile'>
-      <h2 className='profile__title'>{currentUser.name}</h2>
+      <h2 className='profile__title'>Привет, {currentUser.name}!</h2>
       <form className='profile__form' noValidate onSubmit={handleSubmitUpdateProfile}>
         <fieldset className='profile__fieldset'>
           <div className='profile__label-container'>
