@@ -21,6 +21,11 @@ const SUCCESS_UPDATE_PROFILE = 'Редактирование выполнено 
 const MOVIES_NOT_FOUND_ERR = 'По вашему запросу ничего не найдено';
 const SAVED_MOVIES_NOT_FOUND_ERR = 'Сохраненные фильмы не найдены';
 
+// Переменные ширины окна для лимита фильмов
+const WIDTH_16_MOVIES = 1200;
+const WIDTH_12_MOVIES = 1008;
+const WIDTH_8_MOVIES = 650;
+
 // Лимиты отображения карточек фильмов
 const MOVIES_LIMIT_16 = 16;
 const MOVIES_LIMIT_12 = 12;
@@ -54,6 +59,9 @@ export {
   SUCCESS_UPDATE_PROFILE,
   MOVIES_NOT_FOUND_ERR,
   SAVED_MOVIES_NOT_FOUND_ERR,
+  WIDTH_16_MOVIES,
+  WIDTH_12_MOVIES,
+  WIDTH_8_MOVIES,
   MOVIES_LIMIT_16,
   MOVIES_LIMIT_12,
   MOVIES_LIMIT_8,
