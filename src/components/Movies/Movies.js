@@ -1,8 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import useWindowResize from '../../hooks/useWindowResize';
 
 import './Movies.css';
 
-import { MOVIES_NOT_FOUND_ERR, DATA_PROCESSING_ERR } from '../../constants/constants';
+import {
+  MOVIES_NOT_FOUND_ERR,
+  DATA_PROCESSING_ERR,
+  WIDTH_16_MOVIES,
+  WIDTH_12_MOVIES,
+  WIDTH_8_MOVIES,
+  MOVIES_LIMIT_16,
+  MOVIES_LIMIT_12,
+  MOVIES_LIMIT_8,
+  MOVIES_LIMIT_5,
+  MOVIES_LIMIT_STEP_4,
+  MOVIES_LIMIT_STEP_3,
+  MOVIES_LIMIT_STEP_2,
+} from '../../constants/constants';
 
 import { moviesApi } from '../../utils/MoviesApi';
 import filterMovies from '../../utils/FilterMovies';
@@ -25,6 +39,35 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
   // Cтейт переменная отфильтрованных фильмов
   const [filteredMovies, setFilteredMovies] = useState([]);
 
+  // Лимит отображения фильмов
+  const [moviesLimit, setMoviesLimit] = useState(0);
+  // Лимиты отображения карточек фильмов, при нажатии кнопки "Еще"
+  const [moviesLimitStep, setMoviesLimitStep] = useState(0);
+  // // Переменная для отслеживания ширины окна
+  const { width } = useWindowResize();
+
+  // Устанавливаем лимиты в зависимости от ширины окна
+  const resizeMovieList = useCallback(() => {
+    if (width >= WIDTH_16_MOVIES) {
+      setMoviesLimit(MOVIES_LIMIT_16);
+      setMoviesLimitStep(MOVIES_LIMIT_STEP_4);
+    } else if (width >= WIDTH_12_MOVIES) {
+      setMoviesLimit(MOVIES_LIMIT_12);
+      setMoviesLimitStep(MOVIES_LIMIT_STEP_3);
+    } else if (width >= WIDTH_8_MOVIES) {
+      setMoviesLimit(MOVIES_LIMIT_8);
+      setMoviesLimitStep(MOVIES_LIMIT_STEP_2);
+    }
+    else {
+      setMoviesLimit(MOVIES_LIMIT_5);
+      setMoviesLimitStep(MOVIES_LIMIT_STEP_2);
+    }
+  }, [width])
+
+  useEffect(() => {
+    resizeMovieList()
+  }, [width, resizeMovieList]);
+
   // Обработчик фильтрации фильмов на роуте /movies
   function handleFilterMovies(initialMovies, searchQuery, isShort) {
     // Сбрасываем ошибки в списке фильмов
@@ -41,6 +84,8 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
   function handleSearchMovies(searchQuery, isShort) {
     // Запускаем Preloader
     setIsLoading(true);
+    // Отображаем правильное количество карточек в зависимости от разрешения
+    resizeMovieList();
     // Проверяем наличие фильмов с API beatFilms
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
     // Если нет фильмов в localStorage, запрашиваем их с API и потом запускаем фильтр
@@ -65,6 +110,11 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
     }
   }
 
+  // Обработчик кнопки "Еще"
+  function handleShowMoreMovies() {
+    setMoviesLimit(moviesLimit + moviesLimitStep);
+  }
+
   return (
     <main className='movies'>
       <SearchForm
@@ -82,7 +132,9 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
             filteredMovies={filteredMovies}
             moviesError={moviesError}
             toggleSaveMovie={toggleSaveMovie}
-            savedMovies={savedMovies} />
+            savedMovies={savedMovies}
+            handleShowMoreMovies={handleShowMoreMovies}
+            moviesLimit={moviesLimit} />
         )
       }
     </main>
