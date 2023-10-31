@@ -22,9 +22,10 @@ const MOVIES_NOT_FOUND_ERR = 'По вашему запросу ничего не
 const SAVED_MOVIES_NOT_FOUND_ERR = 'Сохраненные фильмы не найдены';
 
 // Переменные ширины окна для лимита фильмов
-const WIDTH_16_MOVIES = 1200;
-const WIDTH_12_MOVIES = 1008;
-const WIDTH_8_MOVIES = 650;
+const WIDTH_16_MOVIES = 1241;
+const WIDTH_12_MOVIES = 1240;
+const WIDTH_8_MOVIES = 986;
+const WIDTH_5_MOVIES = 760;
 
 // Лимиты отображения карточек фильмов
 const MOVIES_LIMIT_16 = 16;
@@ -62,6 +63,7 @@ export {
   WIDTH_16_MOVIES,
   WIDTH_12_MOVIES,
   WIDTH_8_MOVIES,
+  WIDTH_5_MOVIES,
   MOVIES_LIMIT_16,
   MOVIES_LIMIT_12,
   MOVIES_LIMIT_8,

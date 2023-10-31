@@ -9,6 +9,7 @@ import {
   WIDTH_16_MOVIES,
   WIDTH_12_MOVIES,
   WIDTH_8_MOVIES,
+  WIDTH_5_MOVIES,
   MOVIES_LIMIT_16,
   MOVIES_LIMIT_12,
   MOVIES_LIMIT_8,
@@ -51,14 +52,16 @@ function Movies({ savedMovies, toggleSaveMovie, moviesError, setMoviesError }) {
     if (width >= WIDTH_16_MOVIES) {
       setMoviesLimit(MOVIES_LIMIT_16);
       setMoviesLimitStep(MOVIES_LIMIT_STEP_4);
-    } else if (width >= WIDTH_12_MOVIES) {
+    } 
+    else if (width <= WIDTH_12_MOVIES) {
       setMoviesLimit(MOVIES_LIMIT_12);
       setMoviesLimitStep(MOVIES_LIMIT_STEP_3);
-    } else if (width >= WIDTH_8_MOVIES) {
+    }
+    if (width <= WIDTH_8_MOVIES) {
       setMoviesLimit(MOVIES_LIMIT_8);
       setMoviesLimitStep(MOVIES_LIMIT_STEP_2);
     }
-    else {
+    if (width <= WIDTH_5_MOVIES) {
       setMoviesLimit(MOVIES_LIMIT_5);
       setMoviesLimitStep(MOVIES_LIMIT_STEP_2);
     }
