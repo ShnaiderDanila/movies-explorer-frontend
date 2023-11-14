@@ -52,27 +52,40 @@
   line-height: 16.94px;
 }
 
-.register__input:focus {
-  border-bottom: 1px solid #3456f3;
+.register__input:disabled {
+  color: #a0a0a0;
 }
 
-.register__input_invalid {
-  color: #ee3465;
+.register__input:focus {
+  border-bottom: 1px solid #3456f3;
 }
 
 .register__input-error {
   color: transparent;
   font-size: 10px;
   line-height: 12.1px;
+  min-height: 25px;
 }
 
 .register__input-error_active {
   color: #ee3465
 }
 
+.register__button-container {
+  margin: 55px auto 0 auto;
+}
+
+.register__error {
+  margin: 0;
+  min-height: 20px;
+  color: #ee3465;
+  font-size: 14px;
+  text-align: center;
+}
+
 .register__signup-button {
+  margin: 20px 0 0 0;
   display: block;
-  margin: 133px auto 0 auto;
   padding: 0;
   border: none;
   border-radius: 3px;
@@ -87,7 +100,7 @@
   transition: opacity 0.3s ease;
 }
 
-.register__signup-button_disabled {
+.register__signup-button:disabled {
   background-color: #f8f8f8;
   color: #c2c2c2;
 }
@@ -110,6 +123,10 @@
   color: #3456f3;
   text-decoration: none;
   transition: opacity 0.3s ease;
+}
+
+.register__signin-button_disabled {
+  pointer-events: none;
 }
 
 /* Адаптив  */
@@ -143,12 +160,23 @@
     margin: 48px 0 0 0;
   }
 
+  .register__label {
+    margin: 0 0 10px 0;
+  } 
+
   .register__form {
     margin: 78px 0 0 0;
   }
 
+  .register__button-container {
+    margin: 120px auto 0 auto;
+  }
+
+  .register__error {
+    font-size: 12px;
+  }
+
   .register__signup-button {
-    margin: 221px auto 0 auto;
     font-size: 12px;
     line-height: 14.52px;
   }

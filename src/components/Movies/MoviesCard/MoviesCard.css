@@ -11,6 +11,7 @@
   border-radius: 9px 9px 0 0;
   object-fit: cover;
   object-position: center;
+  transition: opacity 0.3s ease;
 }
 
 .movies-card__description {
@@ -71,9 +72,13 @@
   .movies-card__delete-button:hover {
     opacity: 0.8;
   }
+  
+  .movies-card__image:hover {
+    opacity: 0.7;
+  }
 }
 
-@media screen and (max-width: 1007px) {
+@media screen and (max-width: 986px) {
   .movies-card {
     max-width: 339px;
   }
@@ -83,7 +88,7 @@
   }
 }
 
-@media screen and (max-width: 745px) {
+@media screen and (max-width: 760px) {
   .movies-card {
     max-width: 300px;
   }
@@ -91,4 +96,4 @@
   .movies-card__image {
     height: 168px;
   }
-}
+}  

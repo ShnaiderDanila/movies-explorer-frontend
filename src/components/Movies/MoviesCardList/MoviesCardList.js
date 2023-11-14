@@ -1,61 +1,69 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import useWindowResize from '../../../hooks/useWindowResize';
 
 import './MoviesCardList.css';
 
-import { cards, savedCards } from '../../../utils/constants'
-
-import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
-  
+function MoviesCardList({
+  filteredMovies,
+  moviesError,
+  savedMovies,
+  toggleSaveMovie,
+  deleteMovie,
+  handleShowMoreMovies,
+  moviesLimit }) {
+
   const { pathname } = useLocation();
 
-  // Переменная для отслеживания ширины окна
-  const { width } = useWindowResize();
-
-  // Временая стейт переменная, для сокращения количества отображаемых карточек-фильмов
-  const [limit, setLimit] = useState(16)
-
-  useEffect(() => {
-    if (width > 1007) {
-      setLimit(16)
-    } else if (width <= 1007 && width >= 650) {
-      setLimit(8)
-    } else {
-      setLimit(5)
-    }
-  }, [width]);
-
-  // Временая стейт переменная для отображения Прелоадера
-  const [isLoading] = useState(false);
-
-  if (isLoading) {
-    return <Preloader />
-  } else {
-    return (
-      <section className='movies-card-list'>
-        <ul className='movies-card-list__list'>
-          {pathname === '/saved-movies'
-            ? savedCards.map((card, i) => {
-              return (
-                i < limit &&
-                <MoviesCard key={i} card={card} />
-              )
-            })
-            : cards.map((card, i) => {
-              return (
-                i < limit &&
-                <MoviesCard key={i} card={card} />
-              )
-            })}
-        </ul>
-        <button className='movies-card-list__button-more'>Ещё</button>
-      </section>
-    )
-  }
+  return (
+    <section className='movies-card-list'>
+      {moviesError
+        ? <p className='movies-card-list__error'>{moviesError}</p>
+        : <>
+          {filteredMovies.length !== 0 &&
+            <>
+              <ul className='movies-card-list__list'>
+                {filteredMovies.map((movie, i) => {
+                  // Разделяем дальнейшую разметку по роуту, так как условие i < moviesLimit не нужно в /saved-movies
+                  if (pathname === '/movies') {
+                    return (
+                      i < moviesLimit &&
+                      <MoviesCard
+                        key={movie.id || movie.movieId}
+                        movie={movie}
+                        toggleSaveMovie={toggleSaveMovie}
+                        savedMovies={savedMovies}
+                        deleteMovie={deleteMovie} />
+                    )
+                  }
+                  else {
+                    return (
+                      <MoviesCard
+                        key={movie.id || movie.movieId}
+                        movie={movie}
+                        toggleSaveMovie={toggleSaveMovie}
+                        savedMovies={savedMovies}
+                        deleteMovie={deleteMovie} />
+                    )
+                  }
+                })}
+              </ul>
+              { // Показываем кнопку "Ещё" только на роуте /movies
+                filteredMovies.length > moviesLimit && pathname === '/movies' && (
+                  <button
+                    className='movies-card-list__button-more'
+                    type='button'
+                    onClick={handleShowMoreMovies}>
+                    Ещё
+                  </button>
+                )}
+            </>
+          }
+        </>
+      }
+    </section >
+  )
 }
 
 export default MoviesCardList;

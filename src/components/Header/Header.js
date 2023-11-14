@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+
 import './Header.css';
 
 import Logo from "../Logo/Logo";
@@ -10,11 +11,17 @@ function Header({ isLoggedIn }) {
   const { pathname } = useLocation();
 
   const [burgerMenuIsOpen, setburgerMenuIsOpen] = useState(false);
-
-  function handleBurgerMenu() {
+  
+  function handleBurgerMenuOpen() {
     document.body.classList.toggle('no-scroll');
     setburgerMenuIsOpen(!burgerMenuIsOpen);
   }
+
+  // Закрывать "бургер меню" при переходе на другой роут
+  useEffect(() => {
+    setburgerMenuIsOpen(false);
+    document.body.classList.remove('no-scroll');
+  }, [pathname])
 
   if (
     pathname === '/' ||
@@ -31,13 +38,13 @@ function Header({ isLoggedIn }) {
             ${burgerMenuIsOpen
                 ? 'header__burger-menu-button_close'
                 : 'header__burger-menu-button_open'}`}
-            onClick={handleBurgerMenu}>
+            onClick={handleBurgerMenuOpen}>
           </button>
         }
         <Navigation isLoggedIn={isLoggedIn} burgerMenuIsOpen={burgerMenuIsOpen} />
       </header>
     )
-  }
-}
+  };
+};
 
 export default Header;

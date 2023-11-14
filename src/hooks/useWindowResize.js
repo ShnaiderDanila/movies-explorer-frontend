@@ -8,10 +8,13 @@ function useWindowResize() {
 
   useEffect(() => {
     function handleResize() {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      })
+      // Устанавливаем искуственную задержку "Чтобы колбэк-функция слушателя не срабатывала слишком часто"
+      setTimeout(() => {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight
+        })
+      }, 200);
     }
 
     window.addEventListener('resize', handleResize);

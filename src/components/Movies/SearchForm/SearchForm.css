@@ -81,8 +81,20 @@
   line-height: 18px;
 }
 
+.search-form__error {
+  margin: 10px 0 0 0;
+  padding-left: 19px;
+  color: transparent;
+  font-size: 13px;
+  line-height: 13.31px;
+}
+
+.search-form__error_visible {
+  color: #ff004d;
+}
+
 .search-form__underline {
-  margin: 69px 0 0 0;
+  margin: 59px 0 0 0;
   padding: 0;
   border: 0;
   height: 1px;
@@ -169,6 +181,13 @@
     margin: 0 0 0 14px;
     font-size: 11px;
     line-height: 18px;
+  }
+
+  .search-form__error {
+    margin: 20px 0 0 0;
+    padding: 0;
+    text-align: center;
+    font-size: 12px;
   }
 
   .search-form__underline {
