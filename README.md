@@ -4,21 +4,19 @@
 ## Описание проекта
 **Movies Explorer** - приложение для поиска и просмотра фильмов международного фестиваля документального кино о новой культуре **Beat Film Festival**. Отзывчиво-адаптивное приложение (SPA), написанное на React (frontend) и Express (backend).
 
-## Функциональность
+## Функциональность (Frontend)
 * Регистрация и авторизация пользователей;
 * Редактирование личных данных;
 * Поиск фильмов по ключевым словам;
 * Поиск фильмов по длительности;
 * Сохранение/удаление фильмов в личном кабинете;
 
-## Используемые технологии:
+## Используемые технологии (Frontend):
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) 
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
@@ -35,19 +33,17 @@
 * Отправка запросов и получение ответов от сервера;
 * Возможность открытия модальных окон;
 
-## 🚀 Запуск проекта:
+## 🚀 Запуск проекта (Frontend):
 
 #### Клонировать репозиторий:
 ```
 git clone https://github.com/Shnd3r/movies-explorer-frontend.git
 ```
 #### Установить зависимости:
-
 ```
 npm install
 ```
 #### Запустить приложение:
-
 ```
 npm run start
 ```
