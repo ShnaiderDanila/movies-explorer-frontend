@@ -1,4 +1,4 @@
-# [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&random=false&width=435&lines=Movies-explorer.+Frontend)](https://git.io/typing-svg)
+# [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&pause=1000&random=false&width=500&lines=Movies-explorer.+Frontend)](https://git.io/typing-svg)
 Дипломный проект в рамках учебы в [Яндекс.Практикум](https://practicum.yandex.ru/) на факультете [Веб-разработчик](https://practicum.yandex.ru/web/)
 
 ## Описание проекта
@@ -16,16 +16,18 @@
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
 ### Особенности вёрстки:
-* Flexbox-вёрстка,
-* Grid Layouts,
-* БЭМ (правильное наименование),
-* Анимация при наведении курсора,
-* Импорт шрифтов,
-* Адаптивная "резиновая" вёрстка сайтов,
+* Flexbox-вёрстка;
+* Grid Layouts;
+* БЭМ (правильное наименование);
+* Анимация при наведении курсора;
+* Импорт шрифтов;
+* Адаптивная "резиновая" вёрстка сайтов;
 
 ### Особенности JavaScript, React:
 * Функциональные компоненты, хуки, создание и подключение контекста, поднятие стейта, управляемые компоненты;
@@ -49,12 +51,12 @@ npm install
 npm run start
 ```
 
-## Макет в Figma
+## 🎨 Макет в Figma
 Название макета: light-3
 
 Ссылка на макет: https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82?type=design&node-id=1-1534&mode=design
 
-## Ссылки на проект
+## 🌐 Ссылки на проект
 Backend: https://api.movies-explorer.shndr.nomoredomainsrocks.ru
 
 Frontend: https://movies-explorer.shndr.nomoredomainsrocks.ru или http://movies-explorer.shndr.nomoredomainsrocks.ru
