@@ -1,8 +1,8 @@
 # [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&random=false&width=435&lines=Movies-explorer.+Frontend)](https://git.io/typing-svg)
-Дипломный проект в рамках учебы в [Яндекс.Практикум](https://practicum.yandex.ru/) на факультете ["Веб-разработчик"](https://practicum.yandex.ru/web/)
+Дипломный проект в рамках учебы в [Яндекс.Практикум](https://practicum.yandex.ru/) на факультете [Веб-разработчик](https://practicum.yandex.ru/web/)
 
 ## Описание проекта
-**Movies Explorer** - приложение для поиска и просмотра фильмов международного фестиваля документального кино о новой культуре **Beat Film Festival**. Выполнен в рамках образовательной программы Яндекс.Практикум, курс Веб-разработчик и представляет собой отзывчиво-адаптивное приложение (SPA), написанное на React (frontend) и Express (backend).
+**Movies Explorer** - приложение для поиска и просмотра фильмов международного фестиваля документального кино о новой культуре **Beat Film Festival**. Отзывчиво-адаптивное приложение (SPA), написанное на React (frontend) и Express (backend).
 
 ## Функциональность
 * Регистрация и авторизация пользователей;
