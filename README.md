@@ -60,7 +60,8 @@ npm run start
 ## 🌐 Ссылки на проект
 Backend: https://api.movies-explorer.shndr.nomoredomainsrocks.ru
 
-Frontend: https://movies-explorer.shndr.nomoredomainsrocks.ru или http://movies-explorer.shndr.nomoredomainsrocks.ru
+Frontend: https://movies-explorer.shndr.nomoredomainsrocks.ru или 
+http://movies-explorer.shndr.nomoredomainsrocks.ru
 
 
 2023© Шнайдер Данила
