@@ -9,7 +9,7 @@
 **Ссылки на проект:**
 - IP: 158.160.120.12
 - Frontend: https://movies-explorer.shndr.nomoredomainsrocks.ru
-- Backend: https://movies-explorer.shndr.nomoredomainsrocks.ru 
+- Backend: https://api.movies-explorer.shndr.nomoredomainsrocks.ru
 
 ## Функциональность (Frontend)
 * Регистрация и авторизация пользователей;
