@@ -7,9 +7,9 @@
 **Movies Explorer** - приложение для поиска и просмотра фильмов международного фестиваля документального кино о новой культуре **Beat Film Festival**. Отзывчиво-адаптивное приложение (SPA), написанное на React (frontend) и Express (backend).
 
 **Ссылки на проект:**
-IP: 158.160.120.12
-Frontend: https://movies-explorer.shndr.nomoredomainsrocks.ru
-Backend: https://movies-explorer.shndr.nomoredomainsrocks.ru 
+- IP: 158.160.120.12
+- Frontend: https://movies-explorer.shndr.nomoredomainsrocks.ru
+- Backend: https://movies-explorer.shndr.nomoredomainsrocks.ru 
 
 ## Функциональность (Frontend)
 * Регистрация и авторизация пользователей;
