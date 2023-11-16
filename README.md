@@ -11,6 +11,10 @@
 - Frontend: https://movies-explorer.shndr.nomoredomainsrocks.ru
 - Backend: https://api.movies-explorer.shndr.nomoredomainsrocks.ru
 
+**Ссылки на репозитории:**
+- Frontend: https://github.com/Shnd3r/movies-explorer-frontend
+- Backend: https://github.com/Shnd3r/movies-explorer-api
+
 ## Функциональность (Frontend)
 * Регистрация и авторизация пользователей;
 * Редактирование личных данных;
