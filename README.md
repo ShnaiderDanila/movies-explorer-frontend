@@ -1,7 +1,7 @@
 # [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=30&pause=1000&random=false&width=500&lines=Movies-explorer.+Frontend)](https://git.io/typing-svg)
 Дипломный проект в рамках учебы в [Яндекс.Практикум](https://practicum.yandex.ru/) на факультете [Веб-разработчик](https://practicum.yandex.ru/web/)
 
-![Movies Explorer](https://github.com/Shnd3r/movies-explorer-frontend/assets/116545792/d7b88042-4d5d-4d38-8df1-01385ed146ee)
+![movies-explorer](https://github.com/ShnaiderDanila/movies-explorer-frontend/assets/116545792/ccbdd88a-504d-4a9e-9238-f077cd0e224d)
 
 ## Описание проекта
 **Movies Explorer** - приложение для поиска и просмотра фильмов международного фестиваля документального кино о новой культуре **Beat Film Festival**. Отзывчиво-адаптивное приложение (SPA), написанное на React (frontend) и Express (backend).
@@ -12,8 +12,8 @@
 - Backend: https://api.movies-explorer.shndr.nomoredomainsrocks.ru
 
 **Ссылки на репозитории:**
-- Frontend: https://github.com/Shnd3r/movies-explorer-frontend
-- Backend: https://github.com/Shnd3r/movies-explorer-api
+- Frontend: https://github.com/ShnaiderDanila/movies-explorer-frontend
+- Backend: https://github.com/ShnaiderDanila/movies-explorer-api
 
 ## Функциональность (Frontend)
 * Регистрация и авторизация пользователей;
@@ -69,5 +69,5 @@ npm run start
 **Данила Шнайдер**
 
 - E-mail: [d.shnder@gmail.com](mailto:d.shnder@gmail.com)
-- Telegram: [@shnd3r](https://t.me/shnd3r)
+- Telegram: [@shnaider_danila](https://t.me/shnaider_danila)
 
